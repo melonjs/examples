@@ -8,20 +8,22 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-  <!-- melonJS Library -->
-  <script type="text/javascript" src="../../build/melonjs.js"></script>
-  <script type="text/javascript" src="../../plugins/debug/debugPanel.js"></script>
+    <!-- melonJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.js"></script>
 
-  <!-- Game Scripts -->
-  <script type="text/javascript" src="js/game.js"></script>
+    <!-- Plugin(s) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@latest/plugins/debug/debugPanel.js"></script>
 
-  <script type="text/javascript" src="js/entities/entities.js"></script>
+    <!-- Game Scripts -->
+    <script type="text/javascript" src="js/game.js"></script>
 
-  <!-- Bootstrap -->
-  <script type="text/javascript">
-      me.device.onReady(function onReady() {
-          game.onload();
-      });
-  </script>
+    <script type="text/javascript" src="js/entities/entities.js"></script>
+
+    <!-- Bootstrap -->
+    <script type="text/javascript">
+        me.device.onReady(function onReady() {
+            game.onload();
+        });
+    </script>
 </body>
 </html>
