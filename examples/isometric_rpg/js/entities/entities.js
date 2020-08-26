@@ -4,11 +4,19 @@
 /*        a player entity                                                           */
 /*                                                                                  */
 /************************************************************************************/
-game.PlayerEntity = me.Entity.extend({
+game.PlayerEntity = me.Sprite.extend({
     init: function(x, y, settings) {
         // call the constructor
-        this._super(me.Entity, "init", [x, y , settings]);
+        this._super(me.Sprite, "init", [x, y,
+            Object.assign({
+                image: "Blank_Sprite_Sheet",
+                framewidth: 32,
+                frameheight: 32
+            }, settings)
+        ]);
 
+        // add a physic body with a diamond as a body shape
+        this.body = new me.Body(this, (new me.Rect(16, 16, 16, 16)).toIso());
         // walking & jumping speed
         this.body.setVelocity(2.5, 2.5);
         this.body.setFriction(0.4,0.4);
@@ -22,19 +30,10 @@ game.PlayerEntity = me.Entity.extend({
         me.input.bindKey(me.input.KEY.UP,    "up");
         me.input.bindKey(me.input.KEY.DOWN,  "down");
 
-        // the main player spritesheet
-        var texture =  new me.video.renderer.Texture(
-            { framewidth: 32, frameheight: 32 },
-            me.loader.getImage("Blank_Sprite_Sheet_4_2_by_KnightYamato")
-        );
-
-        // create a new sprite object
-        this.renderable = texture.createAnimationFromName([0, 1, 2, 3, 4, 5, 6, 7, 8]);
         // define an additional basic walking animation
-        this.renderable.addAnimation ("simple_walk", [0,1,2]);
-
-        // set the renderable position to bottom center
-        this.anchorPoint.set(0.5, 0.5);
+        this.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+        // set default one
+        this.setCurrentAnimation("walk");
     },
 
     /* -----
