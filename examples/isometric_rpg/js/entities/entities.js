@@ -64,13 +64,13 @@ game.PlayerEntity = me.Sprite.extend({
         if (me.input.isKeyPressed("up")) {
             // update the entity velocity
             this.body.vel.y -= this.body.accel.y * me.timer.tick;
-            if (!this.isCurrentAnimation("walk_up")) {
+            if (!this.isCurrentAnimation("walk_up") && this.body.vel.x === 0) {
                 this.setCurrentAnimation("walk_up");
             }
         } else if (me.input.isKeyPressed("down")) {
             // update the entity velocity
             this.body.vel.y += this.body.accel.y * me.timer.tick;
-            if (!this.isCurrentAnimation("walk_down")) {
+            if (!this.isCurrentAnimation("walk_down") && this.body.vel.x === 0) {
                 this.setCurrentAnimation("walk_down");
             }
         } else {
