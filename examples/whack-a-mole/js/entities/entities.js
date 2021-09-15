@@ -153,7 +153,7 @@ game.MoleEntity = me.Sprite.extend(
 /**
  * a mole manager (to manage movement, etc..)
  */
-game.MoleManager = me.Entity.extend(
+game.MoleManager = me.Renderable.extend(
 {
     init: function ()
     {
@@ -165,7 +165,7 @@ game.MoleManager = me.Entity.extend(
         settings.width = 10;
         settings.height = 10;
         // call the super constructor
-        this._super(me.Entity, "init", [0, 0, settings]);
+        this._super(me.Renderable, "init", [0, 0, settings]);
 
         // add the first row of moles
         for (i = 0; i < 3; i ++) {
