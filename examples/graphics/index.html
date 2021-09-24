@@ -8,16 +8,16 @@
         <!-- Canvas placeholder -->
         <div id="screen"></div>
         <!-- melonJS Library -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs/dist/melonjs.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@9.0/dist/melonjs.js"></script>
 
         <!-- Plugin(s) -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs/plugins/debug/debugPanel.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@9.0/plugins/debug/debugPanel.js"></script>
 
         <!-- script -->
         <script type="text/javascript">
             me.device.onReady(function onReady() {
                 // Initialize the video.
-                if (!me.video.init(320, 240, {parent : "screen", renderer : me.video.AUTO, preferWebGL1 : true, blendMode: "normal"})) {
+                if (!me.video.init(320, 240, {parent : "screen", renderer : me.video.AUTO, preferWebGL1 : false, blendMode: "normal"})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }
@@ -41,13 +41,13 @@
                             {x: -14, y: 30}
                         ]);
 
-                        this.polymask = new me.Polygon(75, 25, [
-                            {x: 75, y: 7},
-                            {x: 25, y: 7},
-                            {x: 0, y: 50},
-                            {x: 25, y: 93},
-                            {x: 75, y: 93},
-                            {x: 100, y: 50}
+                        this.polymask = new me.Polygon(0, 0, [
+                            {x: 125, y: 17},
+                            {x: 75, y: 17},
+                            {x: 50, y: 60},
+                            {x: 75, y: 103},
+                            {x: 125, y: 103},
+                            {x: 150, y: 60}
                         ]);
 
                         this.polymask.scale(2.0);

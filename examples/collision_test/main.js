@@ -22,6 +22,9 @@ var game = {
                 }
             });
 
+            // reset/empty the game world
+            me.game.world.reset();
+
             // add a background layer
             me.game.world.addChild(new me.ColorLayer("background", "#5E3F66", 0), 0);
 
