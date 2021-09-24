@@ -9,12 +9,12 @@ game.PlayScreen = me.Stage.extend({
         me.game.world.addChild(new me.ColorLayer("background", "black"), 0);
 
         // add a few shapes
-        me.game.world.addChild(new game.Square(50, 50, {width: rectSize, height: rectSize}), 1);
-        me.game.world.addChild(new game.Square(50, 400, {width: rectSize, height: rectSize}), 1);
-        me.game.world.addChild(new game.Square(300, 125, {width: rectSize, height: rectSize}), 1);
-        me.game.world.addChild(new game.Square(300, 350, {width: rectSize, height: rectSize}), 1);
-        me.game.world.addChild(new game.Square(600, 200, {width: rectSize, height: rectSize}), 1);
-        me.game.world.addChild(new game.Square(600, 400, {width: rectSize, height: rectSize}), 1);
+        me.game.world.addChild(new game.Square(50, 50, rectSize, rectSize), 1);
+        me.game.world.addChild(new game.Square(50, 400, rectSize, rectSize), 1);
+        me.game.world.addChild(new game.Square(300, 125, rectSize, rectSize), 1);
+        me.game.world.addChild(new game.Square(300, 350, rectSize, rectSize), 1);
+        me.game.world.addChild(new game.Square(600, 200, rectSize, rectSize), 1);
+        me.game.world.addChild(new game.Square(600, 400, rectSize, rectSize), 1);
 
         me.game.repaint();
 
@@ -54,14 +54,14 @@ game.PlayScreen = me.Stage.extend({
         me.game.world.addChild(new (me.Renderable.extend({
             init: function() {
                 this._super(me.Renderable, 'init', [0, 0, 10, 10]);
-                this.line = new me.Line(me.game.viewport.width / 2, me.game.viewport.height / 2, [
-                    new me.Vector2d(0, 0),
-                    new me.Vector2d(me.game.viewport.width / 2, me.game.viewport.height / 2)
+                this.line = new me.Line(0, 0, [
+                    new me.Vector2d(me.game.viewport.width / 2, me.game.viewport.height / 2),
+                    new me.Vector2d(me.game.viewport.width, me.game.viewport.height)
                 ]);
 
             },
             update : function (dt) {
-                this.line.rotate(0.0125);
+                this.line.rotate(0.0125, new me.Vector2d(me.game.viewport.width / 2, me.game.viewport.height / 2));
                 var result = me.collision.rayCast(this.line);
 
                 if (result.length > 0) {
