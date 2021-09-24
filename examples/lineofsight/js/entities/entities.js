@@ -1,16 +1,22 @@
 
 // a draggable square entity
-game.Square = me.Entity.extend({
+game.Square = me.Renderable.extend({
      /**
      * constructor
      */
-    init: function (x, y, settings) {
-        // ensure we do not create a default shape
-        //settings.shapes = [];
+    init: function (x, y, width, height) {
         // call the super constructor
-        this._super(me.Entity, "init", [x, y, settings]);
+        this._super(me.Renderable, "init", [x, y, width, height]);
 
-        //this.body.addShape(new me.Rect(x, y, this.width, this.height));
+        // use 0,0 as origin
+        this.anchorPoint.set(0, 0);
+
+        // add a physic body
+        //this.body = new me.Body(this, new me.Rect(0, 0, this.width, this.height));
+
+        var rect = this.getBounds().clone();
+        rect.shift(0, 0);
+        this.body = new me.Body(this, rect);
 
         // status flags
         this.selected = false;
@@ -51,24 +57,21 @@ game.Square = me.Entity.extend({
         if (this.selected === false) {
             // manually calculate the relative coordinates for the body shapes
             // since only the bounding box is used by the input event manager
-            var parentPos = this.ancestor.getBounds().pos;
-            var x = event.gameX - this.pos.x - parentPos.x;
-            var y = event.gameY - this.pos.y - parentPos.y;
+            var x = event.gameX - this.getBounds().x + this.body.getBounds().x;
+            var y = event.gameY - this.getBounds().y + this.body.getBounds().y;
 
             // the pointer event system will use the object bounding rect, check then with with all defined shapes
-            for (var i = this.body.shapes.length, shape; i--, (shape = this.body.shapes[i]);) {
-                if (shape.containsPoint(x, y)) {
-                    this.selected = true;
-                    break;
-                }
+            if (this.body.contains(x, y)) {
+                this.selected = true;
             }
+
             if (this.selected) {
                 this.grabOffset.set(event.gameX, event.gameY);
                 this.grabOffset.sub(this.pos);
                 this.selected = true;
             }
         }
-        return this.seleted;
+        return this.selected;
     },
 
     // mouse up function
@@ -99,6 +102,7 @@ game.Square = me.Entity.extend({
 
         renderer.setGlobalAlpha(0.5);
         renderer.setColor(this.color);
+        renderer.translate(this.pos.x, this.pos.y);
         renderer.fillRect(0, 0, this.width, this.height);
         renderer.setGlobalAlpha(1.0);
         renderer.setLineWidth(lineWidth);

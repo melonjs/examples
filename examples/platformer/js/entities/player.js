@@ -109,7 +109,7 @@ game.PlayerEntity = me.Entity.extend({
             me.game.world.removeChild(this);
             me.game.viewport.fadeIn("#fff", 150, function(){
                 me.audio.play("die", false);
-                me.levelDirector.reloadLevel();
+                me.level.reload();
                 me.game.viewport.fadeOut("#fff", 150);
             });
             return true;

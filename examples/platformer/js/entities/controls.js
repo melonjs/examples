@@ -152,7 +152,7 @@ game.HUD.Joypad = me.GUI_Object.extend({
             var x = event.gameScreenX + (event.width / 2);
             var y = event.gameScreenY + (event.height / 2);
             // pointerMove is a global on the viewport, so check for coordinates
-            if (this.getBounds().containsPoint(x, y)) {
+            if (this.getBounds().contains(x, y)) {
                 // if any direction is active, update it if necessary
                 if (this.cursors.left === true || this.cursors.right === true) {
                     this.checkDirection.call(this, x, y);

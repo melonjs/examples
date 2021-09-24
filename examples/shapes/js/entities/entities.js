@@ -5,7 +5,7 @@ game.Sprite = me.Sprite.extend({
     init: function (x, y, settings) {
         this._super(me.Sprite, "init", [ x, y, {image: settings.sprite} ]);
 
-        // add a physic body with an ellipse as body shape
+        // add a physic body
         this.body = new me.Body(this);
         this.body.gravityScale = 0;
 
@@ -70,17 +70,13 @@ game.Sprite = me.Sprite.extend({
         if (this.selected === false) {
             // manually calculate the relative coordinates for the body shapes
             // since only the bounding box is used by the input event manager
-            var x = event.gameX - this.getBounds().pos.x + this.body.getBounds().pos.x;
-            var y = event.gameY - this.getBounds().pos.y + this.body.getBounds().pos.y;
+            var x = event.gameX - this.getBounds().x + this.body.getBounds().x;
+            var y = event.gameY - this.getBounds().y + this.body.getBounds().y;
 
             // the pointer event system will use the object bounding rect, check then with with all defined shapes
-            for (var i = this.body.shapes.length, shape; i--, (shape = this.body.shapes[i]);) {
-                if (shape.containsPoint(x, y)) {
-                    this.selected = true;
-                    break;
-                }
+            if (this.body.contains(x, y)) {
+                this.selected = true;
             }
-
             if (this.selected) {
                 this.grabOffset.set(event.gameX, event.gameY);
                 this.grabOffset.sub(this.pos);
@@ -101,6 +97,7 @@ game.Sprite = me.Sprite.extend({
      * update function
      */
     update: function () {
+        this._super(me.Sprite, "update");
         return this.selected;
     },
 

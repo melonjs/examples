@@ -78,7 +78,7 @@ game.UI.Container = me.Container.extend({
      * pointermove function
      */
     pointerMove: function (event) {
-        this.hover = this.getBounds().containsPoint(event.gameX, event.gameY);
+        this.hover = this.getBounds().contains(event.gameX, event.gameY);
 
         if (this.selected) {
             // follow the pointer
