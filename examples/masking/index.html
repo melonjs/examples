@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>melonJS - Sprite Masking and Tinting</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+    </head>
+    <body bgcolor="white">
+        <!-- Canvas placeholder -->
+        <div id="screen"></div>
+        <!-- script -->
+        <script type="module">
+            import * as me from 'https://cdn.jsdelivr.net/npm/melonjs/dist/melonjs.module.js';
+            // upon device ready
+            me.device.onReady(function () {
+                // Initialize the video (force canvas renderer as we are using system font later)
+                if (!me.video.init(1218, 768, {parent : "screen", scaleMethod : "fit", renderer: me.video.CANVAS})) {
+                    alert("Your browser does not support HTML5 canvas.");
+                    return;
+                }
+                // don't use the preloader since we only load one asset
+                me.loader.load({
+                        name   : "background",
+                        type   : "image",
+                        src    : "data/psycool.jpg",
+                    },
+                    // onload callback
+                    () => {
+
+                        // create a first "plain" sprite instance
+                        var bg_sprite1 = new me.Sprite(
+                            me.game.viewport.width / 2 ,
+                            me.game.viewport.height / 2, {
+                                image : "background",
+                                anchorPoint : new me.Vector2d(0.5, 0.5)
+                        });
+
+                        // create a 2nd using an ellipse for masking
+                        var bg_sprite2 = new me.Sprite(
+                            me.game.viewport.width / 2,
+                            me.game.viewport.height / 2, {
+                                image : "background",
+                                anchorPoint : new me.Vector2d(0.5, 0.5)
+                        });
+                        // change default alpha and tint
+                        bg_sprite2.alpha = 0.9;
+                        bg_sprite2.tint.setColor(128, 255, 255);
+                        // add a mask
+                        bg_sprite2.mask = new me.Ellipse(0, 0, 640, 640);
+
+
+                        // create a 3rd one using an Polygon for masking
+                        var bg_sprite3 = new me.Sprite(
+                            me.game.viewport.width / 2,
+                            me.game.viewport.height / 2, {
+                                image : "background",
+                                anchorPoint : new me.Vector2d(0.5, 0.5)
+                        });
+                        // change default alpha and tint
+                        bg_sprite3.alpha = 0.9;
+                        bg_sprite3.tint.setColor(255, 0, 255);
+                        // add a star mask
+                        bg_sprite3.mask = new me.Polygon(0, -240, [
+                            // draw a star
+                            {x: 0, y: 0},
+                            {x: 14, y: 30},
+                            {x: 47, y: 35},
+                            {x: 23, y: 57},
+                            {x: 44, y: 90},
+                            {x: 0, y: 62},
+                            {x: -44, y: 90},
+                            {x: -23, y: 57},
+                            {x: -47, y: 35},
+                            {x: -14, y: 30}
+                        ]);
+                        // scale the mask shape to "fill" the above circle
+                        bg_sprite3.mask.scale(5.0);
+
+                        // some display text to brag about the result :)
+                        var text = new me.Text(
+                            me.game.viewport.width / 2,
+                            me.game.viewport.height / 2,
+                            {
+                                text: "this is rendered using only one single image !",
+                                font: "Arial",
+                                size: 14,
+                                fillStyle: "white",
+                                textAlign: "center",
+                                textBaseline: "middle"
+                        });
+
+
+                        // clear the game world
+                        me.game.world.reset();
+
+                        // add all sprites and text to the scene
+                        me.game.world.addChild(bg_sprite1);
+                        me.game.world.addChild(bg_sprite2);
+                        me.game.world.addChild(bg_sprite3);
+                        me.game.world.addChild(text);
+
+                        // subscribe to the main game loop event
+                        me.event.on(me.event.GAME_UPDATE, function() {
+                            bg_sprite1.rotate(0.0125);
+                            bg_sprite2.rotate(-0.0125);
+                            bg_sprite3.rotate(0.0125);
+                        });
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>
