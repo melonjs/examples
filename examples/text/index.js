@@ -1,57 +1,10 @@
-
-var game = {
-
-    /**
-     * Initialize the application
-     */
-     onload: function() {
-
-        // Initialize the video.
-        if (!me.video.init(640, 480, {parent : "screen", scale : "auto", renderer: me.video.CANVAS, preferWebGL1 : false})) {
-            alert("Your browser does not support HTML5 canvas.");
-            return;
-        }
-
-        // set all ressources to be loaded
-        me.loader.preload([{
-            name: "xolo12", type:"image", src: "xolo12.png"
-        }, {
-            name: "xolo12", type:"binary", src: "xolo12.fnt"
-        }, {
-            name: "arialfancy", type:"image", src: "arialfancy.png"
-        }, {
-            name: "arialfancy", type:"binary", src: "arialfancy.fnt"
-        }],
-        this.loaded.bind(this));
-    },
-
-    /**
-     * callback when everything is loaded
-     */
-    loaded: function () {
-        var PlayScreen = me.Stage.extend({
-            // on reset event function
-            onResetEvent : function() {
-                // the font stuff
-                me.game.world.addChild(new FontTest(), 1);
-            }
-        });
-
-        // set the "Play/Ingame" Screen Object
-        me.state.set(me.state.PLAY, new PlayScreen());
-        // switch to PLAY state
-        me.state.change(me.state.PLAY);
-    }
-
-}; // game
-
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
 
 // the font test renderables object
-var FontTest = me.Renderable.extend ({
+class FontTest extends me.Renderable {
 
-    // constructor
-    init: function() {
-        this._super(me.Renderable, "init", [0, 0, me.video.renderer.getWidth(), me.video.renderer.getHeight()]);
+    constructor() {
+        super(0, 0, me.video.renderer.getWidth(), me.video.renderer.getHeight());
 
         this.anchorPoint.set(0, 0);
 
@@ -70,13 +23,14 @@ var FontTest = me.Renderable.extend ({
 
         // text font
         this.font = new me.Text(0, 0, {font: "Arial", size: 8, fillStyle: this.color});
+
         // bitmap font
         this.bFont = new me.BitmapText(0, 0, {font: "xolo12"});
         this.fancyBFont = new me.BitmapText(0, 0, {font: "arialfancy"});
-    },
+    }
 
     // draw function
-    draw : function(renderer) {
+    draw(renderer) {
         var i = 0;
         var text = "";
         var baseline = 0;
@@ -208,9 +162,29 @@ var FontTest = me.Renderable.extend ({
         this.bFont.textBaseline = "top";
         this.fancyBFont.textAlign = "left";
         this.fancyBFont.textBaseline = "top";
-    },
-
-    onDeactivateEvent: function() {
-        me.pool.push(this.color);
     }
-});
+};
+
+/**
+ * Initialize the application
+ */
+export default function onload() {
+
+    // Initialize the video.
+    if (!me.video.init(640, 480, {parent : "screen", scale : "auto", renderer: me.video.CANVAS, preferWebGL1 : false})) {
+        alert("Your browser does not support HTML5 canvas.");
+        return;
+    }
+
+    // set all ressources to be loaded
+    me.loader.preload([
+        { name: "xolo12", type:"image", src: "xolo12.png"},
+        { name: "xolo12", type:"binary", src: "xolo12.fnt"},
+        { name: "arialfancy", type:"image", src: "arialfancy.png"},
+        { name: "arialfancy", type:"binary", src: "arialfancy.fnt"}],
+        function () {
+            me.game.world.reset();
+            me.game.world.addChild(new FontTest(), 1);
+        }
+    );
+};
