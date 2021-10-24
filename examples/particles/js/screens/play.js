@@ -4,7 +4,7 @@ game.PlayScreen = me.Stage.extend({
      */
     onResetEvent : function() {
         // set world size
-        me.game.viewport.bounds.resize(2000, 2000);
+        me.game.viewport.resize(2000, 2000);
 
         // add background to the game world
         me.game.world.addChild(new me.ImageLayer(0, 0, {image:"grid", z:1}));
