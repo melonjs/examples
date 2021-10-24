@@ -44,33 +44,27 @@ class DeviceInfo extends me.Renderable {
     }
 };
 
-
-/* Game namespace */
-var game = {
-    // Run on page load.
-    onload: function () {
-        // Initialize the video.
-        if (!me.video.init(480, 320, {scaleMethod : "flex", renderer : me.video.CANVAS})) {
-            alert("Your browser does not support HTML5 canvas.");
-            return;
-        }
-
-        // enable deviceorientation
-        me.input.registerPointerEvent("pointerleave", me.game.viewport, function() {
-            if (me.device.watchDeviceOrientation() || me.device.watchAccelerometer()) {
-                me.input.releasePointerEvent("pointerleave", me.game.viewport);
-            }
-        });
-
-        // reset/empty the game world
-        me.game.world.reset();
-
-        // clear the background
-        me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
-
-        // renderable to display device information
-        me.game.world.addChild(new DeviceInfo(), 1);
+// executed on device ready
+export default function onload() {
+    // Initialize the video.
+    if (!me.video.init(480, 320, {scaleMethod : "flex", renderer : me.video.CANVAS})) {
+        alert("Your browser does not support HTML5 canvas.");
+        return;
     }
-};
 
-export default game;
+    // enable deviceorientation
+    me.input.registerPointerEvent("pointerleave", me.game.viewport, function() {
+        if (me.device.watchDeviceOrientation() || me.device.watchAccelerometer()) {
+            me.input.releasePointerEvent("pointerleave", me.game.viewport);
+        }
+    });
+
+    // reset/empty the game world
+    me.game.world.reset();
+
+    // clear the background
+    me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
+
+    // renderable to display device information
+    me.game.world.addChild(new DeviceInfo(), 1);
+};

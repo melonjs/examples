@@ -11,10 +11,10 @@
     <!-- Bootstrap -->
     <script type="module">
         import { device } from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
-        import game from './js/app.js';
+        import onload from './index.js';
 
-        device.onReady(function onReady() {
-            game.onload();
+        device.onReady(() => {
+            onload();
         });
     </script>
 </body>
