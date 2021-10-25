@@ -1,25 +1,24 @@
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
 
-/************************************************************************************/
-/*                                                                                  */
-/*        a player entity                                                           */
-/*                                                                                  */
-/************************************************************************************/
-game.PlayerEntity = me.Sprite.extend({
-    init: function(x, y, settings) {
+// a player entity
+class PlayerEntity extends me.Sprite {
+
+    constructor(x, y, settings) {
         // call the constructor
-        this._super(me.Sprite, "init", [x, y,
+        super(x, y,
             Object.assign({
                 image: "Blank_Sprite_Sheet",
                 framewidth: 32,
                 frameheight: 32
             }, settings)
-        ]);
+        );
 
         // add a physic body with a diamond as a body shape
         this.body = new me.Body(this, (new me.Rect(16, 16, 16, 16)).toIso());
         // walking & jumping speed
-        this.body.setVelocity(2.5, 2.5);
+        this.body.setMaxVelocity(2.5, 2.5);
         this.body.setFriction(0.4,0.4);
+
 
         // set the display around our position
         me.game.viewport.follow(this, me.game.viewport.AXIS.BOTH);
@@ -37,65 +36,59 @@ game.PlayerEntity = me.Sprite.extend({
         this.addAnimation("walk_down",  [0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11]);
         // set default one
         this.setCurrentAnimation("walk_down");
-    },
+    }
 
-    /* -----
-
-        update the player pos
-
-    ------            */
-    update : function (dt) {
+    /**
+     * update the player pos
+     */
+    update(dt) {
 
         if (me.input.isKeyPressed("left")) {
             // update the entity velocity
-            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            this.body.force.x = -this.body.maxVel.x;
             if (!this.isCurrentAnimation("walk_left")) {
                 this.setCurrentAnimation("walk_left");
             }
         } else if (me.input.isKeyPressed("right")) {
             // update the entity velocity
-            this.body.vel.x += this.body.accel.x * me.timer.tick;
+            this.body.force.x = this.body.maxVel.x;
             if (!this.isCurrentAnimation("walk_right")) {
                 this.setCurrentAnimation("walk_right");
             }
         } else {
-            this.body.vel.x = 0;
+            this.body.force.x = 0;
         }
         if (me.input.isKeyPressed("up")) {
             // update the entity velocity
-            this.body.vel.y -= this.body.accel.y * me.timer.tick;
+            this.body.force.y = -this.body.maxVel.y;
             if (!this.isCurrentAnimation("walk_up") && this.body.vel.x === 0) {
                 this.setCurrentAnimation("walk_up");
             }
         } else if (me.input.isKeyPressed("down")) {
             // update the entity velocity
-            this.body.vel.y += this.body.accel.y * me.timer.tick;
+            this.body.force.y = this.body.maxVel.y;
             if (!this.isCurrentAnimation("walk_down") && this.body.vel.x === 0) {
                 this.setCurrentAnimation("walk_down");
             }
         } else {
-            this.body.vel.y = 0;
+            this.body.force.y = 0;
         }
-
-        // apply physics to the body (this moves the entity)
-        this.body.update(dt);
-
-        // handle collisions against other shapes
-        me.collision.check(this);
 
         // check if we moved (an "idle" animation would definitely be cleaner)
         if (this.body.vel.x !== 0 || this.body.vel.y !== 0) {
-            this._super(me.Sprite, "update", [dt]);
+            super.update(dt);
             return true;
         }
-    },
+    }
 
     /**
      * colision handler
      * (called when colliding with other objects)
      */
-    onCollision : function (/*response, other*/) {
+    onCollision(/*response, other*/) {
         // Make all other objects solid
         return true;
     }
-});
+};
+
+export default PlayerEntity;

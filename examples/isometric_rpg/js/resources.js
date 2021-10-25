@@ -1,4 +1,4 @@
-game.resources = [
+var resources = [
 
     /* Graphics.
      * @example
@@ -32,3 +32,5 @@ game.resources = [
      */
 
 ];
+
+export default resources;
