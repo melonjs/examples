@@ -38,13 +38,13 @@
   <object id="25" name="me.Entity" gid="46" x="1050" y="1050" width="70" height="70">
    <properties>
     <property name="anchorPoint" value="json:{&quot;x&quot;:0.5,&quot;y&quot;:1}"/>
-    <property name="shapes" value="eval:[new me.Rect(0,35,70,35)]"/>
+    <property name="shapes" value="eval:[new Rect(0,35,70,35)]"/>
    </properties>
   </object>
   <object id="26" name="me.Entity" gid="2147483694" x="910" y="1050" width="70" height="70">
    <properties>
     <property name="anchorPoint" value="json:{&quot;x&quot;:0.5,&quot;y&quot;:1}"/>
-    <property name="shapes" value="eval:[new me.Rect(0,35,70,35)]"/>
+    <property name="shapes" value="eval:[new Rect(0,35,70,35)]"/>
    </properties>
   </object>
   <object id="30" gid="71" x="1095" y="980" width="70" height="70">

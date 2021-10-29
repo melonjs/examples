@@ -1,7 +1,13 @@
-game.PlayerEntity = me.Entity.extend({
-    init: function(x, y, settings) {
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from './../game.js';
+
+class PlayerEntity extends me.Entity {
+    constructor(x, y, settings) {
         // call the constructor
-        this._super(me.Entity, "init", [x, y , settings]);
+        super(x, y , settings);
+
+        // set a "player object" type
+        this.body.collisionType = me.collision.types.PLAYER_OBJECT;
 
         // player can exit the viewport (jumping, falling into a hole, etc.)
         this.alwaysUpdate = true;
@@ -12,7 +18,7 @@ game.PlayerEntity = me.Entity.extend({
 
         this.dying = false;
 
-        this.mutipleJump = 1;
+        this.multipleJump = 1;
 
         // set the viewport to follow this renderable on both axis, and enable damping
         me.game.viewport.follow(this, me.game.viewport.AXIS.BOTH, 0.1);
@@ -58,14 +64,12 @@ game.PlayerEntity = me.Entity.extend({
 
         // set the renderable position to bottom center
         this.anchorPoint.set(0.5, 1.0);
-    },
+    }
 
-    /* -----
-
-        update the player pos
-
-    ------            */
-    update : function (dt) {
+    /**
+     ** update the force applied
+     */
+    update(dt) {
 
         if (me.input.isKeyPressed("left"))    {
             this.body.force.x = -this.body.maxVel.x;
@@ -100,9 +104,6 @@ game.PlayerEntity = me.Entity.extend({
             }
         }
 
-        // apply physics to the body (this moves the entity)
-        this.body.update(dt);
-
         // check if we fell into a hole
         if (!this.inViewport && (this.pos.y > me.video.renderer.getHeight())) {
             // if yes reset the game
@@ -115,25 +116,22 @@ game.PlayerEntity = me.Entity.extend({
             return true;
         }
 
-        // handle collisions against other shapes
-        me.collision.check(this);
-
         // check if we moved (an "idle" animation would definitely be cleaner)
         if (this.body.vel.x !== 0 || this.body.vel.y !== 0 ||
             (this.renderable && this.renderable.isFlickering())
         ) {
-            this._super(me.Entity, "update", [dt]);
+            super.update(dt);
             return true;
         }
 
         return false;
-    },
+    }
 
 
     /**
      * colision handler
      */
-    onCollision : function (response, other) {
+    onCollision(response, other) {
         switch (other.body.collisionType) {
             case me.collision.types.WORLD_SHAPE:
                 // Simulate a platform object
@@ -192,13 +190,12 @@ game.PlayerEntity = me.Entity.extend({
 
         // Make the object solid
         return true;
-    },
-
+    }
 
     /**
      * ouch
      */
-    hurt : function () {
+    hurt() {
         var sprite = this.renderable;
 
         if (!sprite.isFlickering()) {
@@ -215,4 +212,6 @@ game.PlayerEntity = me.Entity.extend({
             me.audio.play("die", false);
         }
     }
-});
+};
+
+export default PlayerEntity;

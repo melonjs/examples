@@ -1,12 +1,15 @@
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from './../game.js';
+
 /**
  * An enemy entity
  * follow a horizontal path defined by the box size in Tiled
  */
-game.PathEnemyEntity = me.Entity.extend({
+class PathEnemyEntity extends me.Entity {
     /**
      * constructor
      */
-    init: function (x, y, settings) {
+    constructor(x, y, settings) {
 
         // save the area size defined in Tiled
         var width = settings.width || settings.framewidth;
@@ -19,7 +22,7 @@ game.PathEnemyEntity = me.Entity.extend({
         settings.shapes[0] = new me.Rect(0, 0, settings.framewidth, settings.frameheight);
 
         // call the super constructor
-        this._super(me.Entity, "init", [x, y , settings]);
+        super(x, y, settings);
 
         // set start/end position based on the initial area size
         x = this.pos.x;
@@ -44,13 +47,13 @@ game.PathEnemyEntity = me.Entity.extend({
 
         // a specific flag to recognize these enemies
         this.isMovingEnemy = true;
-    },
+    }
 
 
     /**
      * manage the enemy movement
      */
-    update : function (dt) {
+    update(dt) {
 
         if (this.alive)    {
             if (this.walkLeft && this.pos.x <= this.startX) {
@@ -62,20 +65,16 @@ game.PathEnemyEntity = me.Entity.extend({
                 this.walkLeft = true;
                 this.renderable.flipX(false);
             }
-
-            // check & update movement
-            this.body.update(dt);
-
         }
 
         // return true if we moved of if flickering
-        return (this._super(me.Entity, "update", [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
-    },
+        return super.update(dt);
+    }
 
     /**
      * collision handle
      */
-    onCollision : function (response) {
+    onCollision(response) {
         // res.y >0 means touched by something on the bottom
         // which mean at top position for this one
         if (this.alive && (response.overlapV.y > 0) && response.a.body.falling) {
@@ -83,6 +82,8 @@ game.PathEnemyEntity = me.Entity.extend({
             this.alive = false;
             //avoid further collision and delete it
             this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+            // make the body static
+            this.body.setStatic(true);
             // set dead animation
             this.renderable.setCurrentAnimation("dead");
             // tint to red
@@ -97,23 +98,22 @@ game.PathEnemyEntity = me.Entity.extend({
             // give some score
             game.data.score += 150;
         }
-
         return false;
     }
 
-});
+};
 
 /**
  * An Slime enemy entity
  * follow a horizontal path defined by the box size in Tiled
  */
-game.SlimeEnemyEntity = game.PathEnemyEntity.extend({
+export class SlimeEnemyEntity extends PathEnemyEntity {
     /**
      * constructor
      */
-    init: function (x, y, settings) {
+    constructor(x, y, settings) {
         // super constructor
-        this._super(game.PathEnemyEntity, "init", [x, y, settings]);
+        super(x, y, settings);
 
         // set a renderable
         this.renderable = game.texture.createAnimationFromName([
@@ -137,19 +137,19 @@ game.SlimeEnemyEntity = game.PathEnemyEntity.extend({
         this.anchorPoint.set(0.5, 1.0);
 
     }
-});
+};
 
 /**
  * An Fly enemy entity
  * follow a horizontal path defined by the box size in Tiled
  */
-game.FlyEnemyEntity = game.PathEnemyEntity.extend({
+export class FlyEnemyEntity extends PathEnemyEntity {
     /**
      * constructor
      */
-    init: function (x, y, settings) {
+    constructor(x, y, settings) {
         // super constructor
-        this._super(game.PathEnemyEntity, "init", [x, y, settings]);
+        super(x, y, settings);
 
         // set a renderable
         this.renderable = game.texture.createAnimationFromName([
@@ -172,4 +172,4 @@ game.FlyEnemyEntity = game.PathEnemyEntity.extend({
         // set the renderable position to bottom center
         this.anchorPoint.set(0.5, 1.0);
     }
-});
+};

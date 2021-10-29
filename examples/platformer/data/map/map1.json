@@ -140,7 +140,7 @@
                         {
                          "name":"shapes",
                          "type":"string",
-                         "value":"eval:[new me.Rect(0,35,70,35)]"
+                         "value":"eval:[new Rect(0,35,70,35)]"
                         }],
                  "rotation":0,
                  "type":"",
@@ -163,7 +163,7 @@
                         {
                          "name":"shapes",
                          "type":"string",
-                         "value":"eval:[new me.Rect(0,35,70,35)]"
+                         "value":"eval:[new Rect(0,35,70,35)]"
                         }],
                  "rotation":0,
                  "type":"",

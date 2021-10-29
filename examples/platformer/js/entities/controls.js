@@ -1,111 +1,56 @@
-/**
- * HUD namespace
- */
-game.HUD = game.HUD || {};
-
-/**
- * a very simple virtual joypad and buttons, that triggers
- * corresponding key events
- */
-game.HUD.VirtualJoypad = me.Container.extend({
-
-    init: function() {
-        // call the constructor
-        this._super(me.Container, "init");
-
-        // persistent across level change
-        this.isPersistent = true;
-
-        // Use screen coordinates
-        this.floating = true;
-
-        // make sure our object is always draw first
-        this.z = Infinity;
-
-        // give a name
-        this.name = "VirtualJoypad";
-
-        // instance of the virtual joypad
-        this.joypad = new game.HUD.Joypad(
-            50,
-            me.game.viewport.height - 200
-        );
-
-        // instance of the button
-        this.button = new game.HUD.Button(
-            me.game.viewport.width - 150,
-            me.game.viewport.height - 150
-        );
-
-        this.addChild(this.joypad);
-        this.addChild(this.button);
-
-        // re-position the button in case of
-        // size/orientation change
-        var self = this;
-        me.event.subscribe(
-            me.event.VIEWPORT_ONRESIZE, function (width, height) {
-                self.button.pos.set(
-                    width - 150,
-                    height - 150,
-                    self.button.pos.z
-                )
-            }
-        );
-
-    }
-});
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from './../game.js';
 
 /**
  * a basic control to toggle fullscreen on/off
  */
-game.HUD.Button = me.GUI_Object.extend({
+class Button extends me.GUI_Object {
     /**
      * constructor
      */
-    init: function(x, y) {
-        this._super(me.GUI_Object, "init", [ x, y, {
+    constructor(x, y) {
+        super(x, y, {
             image: game.texture,
             region : "shadedDark36.png"
-        } ]);
+        });
         this.setOpacity(0.25);
         this.anchorPoint.set(0, 0);
-    },
+    }
 
     /**
      * function called when the object is clicked on
      */
-    onClick : function (event) {
+    onClick(event) {
         this.setOpacity(0.5);
         me.input.triggerKeyEvent(me.input.KEY.SPACE, true);
         return false;
-    },
+    }
 
     /**
      * function called when the object is clicked on
      */
-    onRelease : function (event) {
+    onRelease(event) {
         this.setOpacity(0.25);
         me.input.triggerKeyEvent(me.input.KEY.SPACE, false);
         return false;
     }
-});
+};
 
 
 /**
- * our virtual joypad
+ * a virtual joypad
  */
-game.HUD.Joypad = me.GUI_Object.extend({
+class Joypad extends me.GUI_Object {
     /**
      * constructor
      */
-    init: function(x, y) {
-        this._super(me.GUI_Object, "init", [ x, y, {
+    constructor(x, y) {
+        super(x, y, {
             // background "fix" part of the joypad
             image: game.texture,
             region : "shadedDark07.png",
             anchorPoint : new me.Vector2d(0, 0)
-        } ]);
+        });
 
         // mobile part of the joypad
         this.pad = new me.Sprite(x, y, {
@@ -137,17 +82,17 @@ game.HUD.Joypad = me.GUI_Object.extend({
 
         // register on the pointermove event
         me.input.registerPointerEvent('pointermove', this, this.pointerMove.bind(this));
-    },
+    }
 
-    onDestroyEvent: function () {
+    onDestroyEvent() {
         // release register event event
         me.input.releasePointerEvent("pointermove", this);
-    },
+    }
 
     /**
      * pointermove function
      */
-    pointerMove: function (event) {
+    pointerMove(event) {
         if (this.released === false) {
             var x = event.gameScreenX + (event.width / 2);
             var y = event.gameScreenY + (event.height / 2);
@@ -162,10 +107,10 @@ game.HUD.Joypad = me.GUI_Object.extend({
                 this.onRelease.call(this, event);
             }
         }
-    },
+    }
 
     // update the cursors value and trigger key event
-    checkDirection : function (x, y) {
+    checkDirection(x, y) {
         if (x - this.pos.x < this.width / 2) {
             if (this.cursors.left === false) {
                 me.input.triggerKeyEvent(me.input.KEY.LEFT, true);
@@ -190,23 +135,23 @@ game.HUD.Joypad = me.GUI_Object.extend({
                 this.cursors.left = false;
             }
         }
-    },
+    }
 
     /**
      * function called when the object is clicked on
      */
-    onClick : function (event) {
+    onClick(event) {
         var x = event.gameScreenX + (event.width / 2);
         var y = event.gameScreenY + (event.height / 2);
         this.setOpacity(0.50);
         this.checkDirection.call(this, x, y);
         return false;
-    },
+    }
 
     /**
      * function called when the object is release or cancelled
      */
-    onRelease : function (event) {
+    onRelease(event) {
         this.setOpacity(0.25);
         if (this.cursors.left === true) {
             me.input.triggerKeyEvent(me.input.KEY.LEFT, false);
@@ -218,15 +163,70 @@ game.HUD.Joypad = me.GUI_Object.extend({
         }
         this.joypad_offset.set(0, 0);
         return false;
-    },
+    }
 
     /**
      * extend the draw function
      */
-    draw : function (renderer) {
+    draw(renderer) {
         // call the super constructor
-        this._super(me.GUI_Object, "draw", [ renderer ]);
+        super.draw(renderer);
         this.pad.pos.setV(this.pos).add(this.relative).add(this.joypad_offset);
         this.pad.draw(renderer);
     }
-});
+};
+
+/**
+ * a very simple virtual joypad and buttons, that triggers
+ * corresponding key events
+ */
+class VirtualJoypad extends me.Container {
+
+    constructor() {
+
+        // call the constructor
+        super();
+
+        // persistent across level change
+        this.isPersistent = true;
+
+        // Use screen coordinates
+        this.floating = true;
+
+        // make sure our object is always draw first
+        this.z = Infinity;
+
+        // give a name
+        this.name = "VirtualJoypad";
+
+        // instance of the virtual joypad
+        this.joypad = new Joypad(
+            50,
+            me.game.viewport.height - 200
+        );
+
+        // instance of the button
+        this.button = new Button(
+            me.game.viewport.width - 150,
+            me.game.viewport.height - 150
+        );
+
+        this.addChild(this.joypad);
+        this.addChild(this.button);
+
+        // re-position the button in case of
+        // size/orientation change
+        var self = this;
+        me.event.on(
+            me.event.VIEWPORT_ONRESIZE, function (width, height) {
+                self.button.pos.set(
+                    width - 150,
+                    height - 150,
+                    self.button.pos.z
+                )
+            }
+        );
+    }
+};
+
+export default VirtualJoypad;

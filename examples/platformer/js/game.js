@@ -1,3 +1,15 @@
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+
+import resources from './resources.js';
+import PlayerEntity from './entities/player.js';
+import { SlimeEnemyEntity, FlyEnemyEntity } from './entities/enemies.js';
+import CoinEntity from './entities/coin.js';
+import PlayScreen from './screens/play.js';
+
+import DebugPanelPlugin from './plugin/debug/debugPanel.js';
+
+
+
 /**
  * main
  */
@@ -23,30 +35,34 @@ var game = {
             return;
         }
 
+        // initialize the Debug Panel
+        me.utils.function.defer(me.plugin.register, this, DebugPanelPlugin, "debugPanel");
+
+
         // initialize the "sound engine"
         me.audio.init("mp3,ogg");
 
         // set all ressources to be loaded
-        me.loader.preload(game.resources, this.loaded.bind(this));
+        me.loader.preload(resources, this.loaded.bind(this));
     },
 
 
     /**
      * callback when everything is loaded
      */
-    loaded: function ()    {
+    loaded: function () {
 
         // set the "Play/Ingame" Screen Object
-        me.state.set(me.state.PLAY, new game.PlayScreen());
+        me.state.set(me.state.PLAY, new PlayScreen());
 
         // set the fade transition effect
         me.state.transition("fade", "#FFFFFF", 250);
 
         // register our objects entity in the object pool
-        me.pool.register("mainPlayer", game.PlayerEntity);
-        me.pool.register("SlimeEntity", game.SlimeEnemyEntity);
-        me.pool.register("FlyEntity", game.FlyEnemyEntity);
-        me.pool.register("CoinEntity", game.CoinEntity);
+        me.pool.register("mainPlayer", PlayerEntity);
+        me.pool.register("SlimeEntity", SlimeEnemyEntity);
+        me.pool.register("FlyEntity", FlyEnemyEntity);
+        me.pool.register("CoinEntity", CoinEntity, true);
 
         // load the texture atlas file
         // this will be used by object entities later
@@ -56,7 +72,7 @@ var game = {
         );
 
         // add some keyboard shortcuts
-        me.event.subscribe(me.event.KEYDOWN, function (action, keyCode /*, edge */) {
+        me.event.on(me.event.KEYDOWN, (action, keyCode /*, edge */) => {
 
             // change global volume setting
             if (keyCode === me.input.KEY.PLUS) {
@@ -81,3 +97,5 @@ var game = {
         me.state.change(me.state.PLAY);
     }
 };
+
+export default game;

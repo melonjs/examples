@@ -1,23 +1,32 @@
-game.CoinEntity = me.Collectable.extend({
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from './../game.js';
+
+class CoinEntity extends me.Collectable {
     /**
      * constructor
      */
-    init: function (x, y, settings) {
+    constructor(x, y, settings) {
         // call the super constructor
-        this._super(me.Collectable, "init", [
-            x, y ,
+        super(x, y,
             Object.assign({
                 image: game.texture,
                 region : "coin.png",
                 shapes :[new me.Ellipse(35 / 2, 35 / 2, 35, 35)] // coins are 35x35
             })
-        ]);
-    },
+        );
+    }
+
+    // add a onResetEvent to enable object recycling
+    onResetEvent(x, y, settings) {
+        this.shift(x, y);
+        // renable collision with other objects
+        this.body.setCollisionMask(me.collision.types.ALL_OBJECT);
+    }
 
     /**
      * collision handling
      */
-    onCollision : function (/*response*/) {
+    onCollision(/*response*/) {
 
         // do something when collide
         me.audio.play("cling", false);
@@ -31,4 +40,6 @@ game.CoinEntity = me.Collectable.extend({
 
         return false;
     }
-});
+};
+
+export default CoinEntity;

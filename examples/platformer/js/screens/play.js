@@ -1,8 +1,14 @@
-game.PlayScreen = me.Stage.extend({
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+
+import game from './../game.js';
+import VirtualJoypad from './../entities/controls.js';
+import UIContainer from './../entities/HUD.js';
+
+class PlayScreen extends me.Stage {
     /**
      *  action to perform on state change
      */
-    onResetEvent: function() {
+    onResetEvent() {
       // load a level
         me.level.load("map1");
 
@@ -11,26 +17,26 @@ game.PlayScreen = me.Stage.extend({
 
         // add our HUD to the game world
         if (typeof this.HUD === "undefined") {
-            this.HUD = new game.HUD.UIContainer();
+            this.HUD = new UIContainer();
         }
         me.game.world.addChild(this.HUD);
 
         // display if debugPanel is enabled or on mobile
         if ((me.plugins.debugPanel && me.plugins.debugPanel.panel.visible) || me.device.touch) {
             if (typeof this.virtualJoypad === "undefined") {
-                this.virtualJoypad = new game.HUD.VirtualJoypad();
+                this.virtualJoypad = new VirtualJoypad();
             }
             me.game.world.addChild(this.virtualJoypad);
         }
 
         // play some music
         me.audio.playTrack("dst-gameforest");
-    },
+    }
 
     /**
      *  action to perform on state change
      */
-    onDestroyEvent: function() {
+    onDestroyEvent() {
 
         // remove the HUD from the game world
         me.game.world.removeChild(this.HUD);
@@ -43,4 +49,6 @@ game.PlayScreen = me.Stage.extend({
         // stop some music
         me.audio.stopTrack("dst-gameforest");
     }
-});
+};
+
+export default PlayScreen;
