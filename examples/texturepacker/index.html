@@ -17,22 +17,12 @@
         <!-- Canvas placeholder -->
         <div id="screen"></div>
 
-        <!-- melonJS Library -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@9.0/dist/melonjs.js"></script>
+        <!-- Bootstrap -->
+        <script type="module">
+            import { device } from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+            import game from './js/index.js';
 
-        <!-- Plugin(s) -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@9.0/plugins/debug/debugPanel.js"></script>
-
-        <!-- Game Scripts -->
-        <script type="text/javascript" src="js/game.js"></script>
-        <script type="text/javascript" src="js/resources.js"></script>
-        <script type="text/javascript" src="js/entities/entities.js"></script>
-        <script type="text/javascript" src="js/screens/play.js"></script>
-        <!-- /build -->
-
-        <!-- Bootstrap  -->
-        <script type="text/javascript">
-            me.device.onReady(function onReady() {
+            device.onReady(function onReady() {
                 game.onload();
             });
         </script>

@@ -1,14 +1,20 @@
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from "./../index.js";
+
 /**
  * Cap Guy entiry
  */
-game.CapGuyEntity = me.Entity.extend({
+class CapGuyEntity extends me.Entity {
     /**
      * constructor
      */
-    init: function (x, y) {
+    constructor(x, y) {
 
         // call the super constructor
-        this._super(me.Entity, "init", [-200, 50, {width : 100, height : 300}]);
+        super(0, 200, {width : 100, height : 300});
+
+        // just manually change the guy position
+        this.body.setStatic();
 
         // create an animation using the cap guy sprites, and add as renderable
         this.renderable = game.texture.createAnimationFromName([
@@ -17,16 +23,12 @@ game.CapGuyEntity = me.Entity.extend({
             "capguy/walk/0005", "capguy/walk/0006",
             "capguy/walk/0007", "capguy/walk/0008"
         ]);
-
-        // enable this, since the entity starts off the viewport
-        this.alwaysUpdate = true;
-    },
+    }
 
     /**
      * manage the enemy movement
      */
-    update : function (dt) {
-
+    update(dt) {
         // just manually change the guy position
         this.pos.x += 0.3 * dt;
 
@@ -36,8 +38,10 @@ game.CapGuyEntity = me.Entity.extend({
         }
 
         // call the parent function
-        this._super(me.Entity, "update", [dt]);
+        super.update(dt);
 
         return true;
     }
-});
+};
+
+export default CapGuyEntity;

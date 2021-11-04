@@ -1,8 +1,12 @@
-game.PlayScreen = me.Stage.extend({
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import CapGuyEntity from "./../entities/entities.js";
+import game from "./../index.js";
+
+class PlayScreen extends me.Stage {
     /**
      *  action to perform on state change
      */
-    onResetEvent: function() {
+    onResetEvent() {
         // viewport width and height
         var w = me.game.viewport.width;
         var h = me.game.viewport.height;
@@ -14,10 +18,9 @@ game.PlayScreen = me.Stage.extend({
         background.pos.set(w / 2, h / 2, 1);
         // add to the scene
         me.game.world.addChild(background, 1);
-
         // add the Cap Guy
-        var CapGuyEntity = new game.CapGuyEntity();
-        // add it to the scene
-        me.game.world.addChild(CapGuyEntity, 2);
+        me.game.world.addChild(new CapGuyEntity(), 2);
     }
-});
+};
+
+export default PlayScreen;
