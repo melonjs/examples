@@ -1,8 +1,12 @@
-game.PlayScreen = me.Stage.extend({
+
+import HUDContainer from "./../entities/HUD.js";
+import MoleManager from "./../entities/entities.js";
+
+class PlayScreen extends me.Stage {
     /**
      * action to perform on state change
      */
-    onResetEvent: function() {
+    onResetEvent() {
 
         me.game.reset();
 
@@ -47,7 +51,7 @@ game.PlayScreen = me.Stage.extend({
         grass_lower_3.anchorPoint.set(0, 0);
 
         // instantiate teh mole Manager
-        var moleManager = new game.MoleManager(0, 0);
+        var moleManager = new MoleManager(0, 0);
 
         // add all objects
         me.game.world.addChild (background_sprite10, 0);
@@ -66,22 +70,23 @@ game.PlayScreen = me.Stage.extend({
         me.game.world.addChild (moleManager, 0);
 
         // add our HUD (scores/hiscore)
-        this.HUD = new game.HUD.Container();
+        this.HUD = new HUDContainer();
         me.game.world.addChild(this.HUD);
 
         // start the main soundtrack
         me.audio.playTrack("whack");
-    },
-
+    };
 
     /**
      * action to perform when leaving this screen (state change)
      */
-    onDestroyEvent: function() {
+    onDestroyEvent() {
         // remove the HUD from the game world
         me.game.world.removeChild(this.HUD);
 
         // stop some music
         me.audio.stopTrack();
-    }
-});
+    };
+};
+
+export default PlayScreen;

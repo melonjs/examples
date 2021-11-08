@@ -1,12 +1,13 @@
+import data from "./../data.js";
+
 /**
  * a mole entity
  * note : we don"t use EntityObject, since we wont" use regular collision, etc..
  */
-game.MoleEntity = me.Sprite.extend(
-{
-    init:function (x, y) {
+class MoleEntity extends me.Sprite {
+    constructor(x, y) {
         // call the constructor
-        this._super(me.Sprite, "init", [x, y , { image: "mole", framewidth: 178, frameheight: 140}]);
+        super(x, y , { image: "mole", framewidth: 178, frameheight: 140});
 
         // idle animation
         this.addAnimation ("idle",  [0]);
@@ -36,14 +37,13 @@ game.MoleEntity = me.Sprite.extend(
 
         // register on mouse event
         me.input.registerPointerEvent("pointerdown", this, this.onMouseDown.bind(this));
-
-    },
+    };
 
 
     /**
      * callback for mouse click
      */
-    onMouseDown : function() {
+    onMouseDown() {
         if (this.isOut === true) {
             this.isOut = false;
             // set touch animation
@@ -54,29 +54,29 @@ game.MoleEntity = me.Sprite.extend(
             me.audio.play("ow");
 
             // add some points
-            game.data.score += 100;
+            data.score += 100;
 
-            if (game.data.hiscore < game.data.score) {
+            if (data.hiscore < data.score) {
                 // i could save direclty to me.save
                 // but that allows me to only have one
                 // simple HUD Score Object
-                game.data.hiscore = game.data.score;
+                data.hiscore = data.score;
                 // save to local storage
-                me.save.hiscore = game.data.hiscore;
+                me.save.hiscore = data.hiscore;
             }
 
             // stop propagating the event
             return false;
 
         }
-    },
+    };
 
 
     /**
      * display the mole
      * goes out of the hole
      */
-    display : function() {
+    display() {
         var finalpos = this.initialPos - 140;
         this.displayTween = me.pool.pull("me.Tween", this.pos).to({y: finalpos }, 200);
         this.displayTween.easing(me.Tween.Easing.Quadratic.Out);
@@ -84,46 +84,45 @@ game.MoleEntity = me.Sprite.extend(
         this.displayTween.start();
         // the mole is visible
         this.isVisible = true;
-    },
+    };
 
     /**
      * callback when fully visible
      */
-    onDisplayed : function() {
+    onDisplayed() {
         this.isOut = true;
         this.timer = 0;
-    },
+    };
 
     /**
      * hide the mole
      * goes into the hole
      */
-    hide : function() {
+    hide() {
         var finalpos = this.initialPos;
         this.displayTween = me.pool.pull("me.Tween", this.pos).to({y: finalpos }, 200);
         this.displayTween.easing(me.Tween.Easing.Quadratic.In);
         this.displayTween.onComplete(this.onHidden.bind(this));
         this.displayTween.start();
-    },
+    };
 
     /**
      * callback when fully visible
      */
-    onHidden : function() {
+    onHidden() {
         this.isVisible = false;
         // set default one
         this.setCurrentAnimation("idle");
-    },
+    };
 
 
     /**
      * update the mole
      */
-    update : function ( dt )
-    {
+    update( dt ) {
         if (this.isVisible) {
             // call the super function to manage animation
-            this._super(me.Sprite, "update", [dt] );
+            super.update( dt );
 
             // hide the mode after 1/2 sec
             if (this.isOut===true) {
@@ -137,9 +136,9 @@ game.MoleEntity = me.Sprite.extend(
                     //me.audio.play("laugh");
 
                     // decrease score by 25 pts
-                    game.data.score -= 25;
-                    if (game.data.score < 0) {
-                        game.data.score = 0;
+                    data.score -= 25;
+                    if (data.score < 0) {
+                        data.score = 0;
 
                     }
                 }
@@ -147,53 +146,52 @@ game.MoleEntity = me.Sprite.extend(
             }
         }
         return this.isVisible;
-    }
-});
+    };
+};
 
 /**
  * a mole manager (to manage movement, etc..)
  */
-game.MoleManager = me.Renderable.extend(
-{
-    init: function ()
-    {
-        var i = 0;
-        this.moles = [];
+class MoleManager extends me.Renderable {
 
-        this.timer = 0;
-        var settings = {};
-        settings.width = 10;
-        settings.height = 10;
+    constructor() {
         // call the super constructor
-        this._super(me.Renderable, "init", [0, 0, settings]);
+        super(0, 0, {
+            width : 10,
+            height : 10
+        });
+
+        this.moles = [];
+        this.timer = 0;
+
+        var i = 0;
 
         // add the first row of moles
         for (i = 0; i < 3; i ++) {
-            this.moles[i] = new game.MoleEntity((112 + (i * 310)), 127+40);
+            this.moles[i] = new MoleEntity((112 + (i * 310)), 127+40);
             me.game.world.addChild (this.moles[i], 15);
         }
 
         // add the 2nd row of moles
         for (i = 3; i < 6; i ++) {
-            this.moles[i] = new game.MoleEntity((112 + ((i-3) * 310)), 383+40);
+            this.moles[i] = new MoleEntity((112 + ((i-3) * 310)), 383+40);
             me.game.world.addChild (this.moles[i], 35);
         }
 
         // add the 3rd row of moles
         for (i = 6; i < 9; i ++) {
-            this.moles[i] = new game.MoleEntity((112 + ((i-6) * 310)), 639+40);
+            this.moles[i] = new MoleEntity((112 + ((i-6) * 310)), 639+40);
             me.game.world.addChild (this.moles[i], 55);
         }
 
         this.timer = 0;
 
-    },
+    };
 
     /*
      * update function
      */
-    update : function ( dt )
-    {
+    update( dt ) {
         // every 1/2 seconds display moles randomly
         this.timer += dt;
         if ((this.timer) >= 500) {
@@ -207,7 +205,8 @@ game.MoleManager = me.Renderable.extend(
             }
             this.timer = 0;
         }
-         return false;
-    }
+        return false;
+    };
+};
 
-});
+export default MoleManager;

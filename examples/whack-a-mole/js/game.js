@@ -1,3 +1,7 @@
+import PlayScreen from "./screens/play.js";
+import resources from "./resources.js";
+import data from "./data.js";
+
 /**
  * Whack-A-Mole
  * Freely reused from the Cocos2d Whack-a-mole Tutorial
@@ -8,15 +12,6 @@
  * iPhone game engine Cocos2D.
  **/
 var game = {
-
-    /**
-     * local game data
-     */
-    data : {
-        // score information
-        score : 0,
-        hiscore : 0,
-    },
 
     /**
      * some Initialization
@@ -38,10 +33,10 @@ var game = {
         // add a new hiscore key if not yet defined
         me.save.add({hiscore : 0});
         // set the local hiscore value
-        game.data.hiscore = me.save.hiscore;
+        data.hiscore = me.save.hiscore;
 
         // set all ressources to be loaded
-        me.loader.preload(game.resources, this.loaded.bind(this));
+        me.loader.preload(resources, this.loaded.bind(this));
     },
 
 
@@ -51,7 +46,7 @@ var game = {
     loaded: function () {
 
         // set the "Play/Ingame" Screen Object
-        me.state.set(me.state.PLAY, new game.PlayScreen());
+        me.state.set(me.state.PLAY, new PlayScreen());
 
         // set a fade transition effect
         me.state.transition("fade","#000000", 250);
@@ -61,3 +56,5 @@ var game = {
     }
 
 }; // game
+
+export default game;

@@ -7,7 +7,7 @@
  * of iOS tutorials on how to create a whack-a-mole game using the open source
  * iPhone game engine Cocos2D.
  **/
-game.resources = [
+var resources = [
     // background
     { name: "background", type: "image", src: "data/img/background/bg_dirt128.png" },
     // upper part of foreground
@@ -28,3 +28,5 @@ game.resources = [
     // ow audio FX
     { name: "ow", type: "audio", src: "data/sfx/" }
 ];
+
+export default resources;
