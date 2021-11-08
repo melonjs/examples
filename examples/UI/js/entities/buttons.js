@@ -1,21 +1,18 @@
-/**
- * UI Objects
- */
-
-game.UI = game.UI || {};
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from "./../index.js";
 
 /**
  * a basic button control
  */
-game.UI.ButtonUI = me.GUI_Object.extend({
+export class ButtonUI extends me.GUI_Object {
     /**
      * constructor
      */
-    init: function(x, y, color, label) {
-        this._super(me.GUI_Object, "init", [ x, y, {
+    constructor(x, y, color, label) {
+        super(x, y, {
             image: game.texture,
             region : color + "_button04"
-        } ]);
+        });
 
         // offset of the two used images in the texture
         this.unclicked_region = game.texture.getRegion(color + "_button04");
@@ -36,70 +33,66 @@ game.UI.ButtonUI = me.GUI_Object.extend({
 
         // only the parent container is a floating object
         this.floating = false;
-    },
+    }
 
     /**
      * function called when the pointer is over the object
      */
-    onOver : function (/* event */) {
+    onOver(/* event */) {
         this.setOpacity(1.0);
-    },
+    }
 
     /**
      * function called when the pointer is leaving the object area
      */
-    onOut : function (/* event */) {
+    onOut(/* event */) {
         this.setOpacity(0.5);
-    },
+    }
 
     /**
      * function called when the object is clicked on
      */
-    onClick : function (/* event */) {
+    onClick(/* event */) {
+        this.translate(0, this.height - this.clicked_region.height);
         this.setRegion(this.clicked_region);
-        // account for the different sprite size
-        this.pos.y += this.height - this.clicked_region.height ;
-        this.height = this.clicked_region.height;
         // don't propagate the event
         return false;
-    },
+    }
 
     /**
      * function called when the pointer button is released
      */
-    onRelease : function (/* event */) {
+    onRelease(/* event */) {
         this.setRegion(this.unclicked_region);
-        // account for the different sprite size
-        this.pos.y -= this.unclicked_region.height - this.height;
-        this.height = this.unclicked_region.height;
+        this.translate(0, -(this.height - this.clicked_region.height));
         // don't propagate the event
         return false;
-    },
+    }
 
-    draw: function(renderer) {
-        this._super(me.GUI_Object, "draw", [ renderer ]);
+    draw(renderer) {
+        super.draw(renderer);
         this.font.draw(renderer,
             this.label,
             this.pos.x + this.width / 2,
             this.pos.y + this.height / 2
         );
     }
-});
+};
 
 /**
  * a basic checkbox control
  */
-game.UI.CheckBoxUI = me.GUI_Object.extend({
+export class CheckBoxUI extends me.GUI_Object {
     /**
      * constructor
      */
-    init: function(x, y, texture, on_icon, off_icon, on_label, off_label) {
+    constructor(x, y, texture, on_icon, off_icon, on_label, off_label) {
 
         // call the parent constructor
-        this._super(me.GUI_Object, "init", [ x, y, {
+        super(x, y, {
             image: texture,
             region : on_icon // default
-        } ]);
+        });
 
         // offset of the two used images in the texture
         this.on_icon_region = texture.getRegion(on_icon);
@@ -127,26 +120,26 @@ game.UI.CheckBoxUI = me.GUI_Object.extend({
 
         // only the parent container is a floating object
         this.floating = false;
-    },
+    }
 
     /**
      * function called when the pointer is over the object
      */
-    onOver : function (/* event */) {
+    onOver(/* event */) {
         this.setOpacity(1.0);
-    },
+    }
 
     /**
      * function called when the pointer is leaving the object area
      */
-    onOut : function (/* event */) {
+    onOut(/* event */) {
         this.setOpacity(0.5);
-    },
+    }
 
     /**
      * change the checkbox state
      */
-    setSelected : function (selected) {
+    setSelected(selected) {
         if (selected) {
             this.setRegion(this.on_icon_region);
             this.isSelected = true;
@@ -154,23 +147,23 @@ game.UI.CheckBoxUI = me.GUI_Object.extend({
             this.setRegion(this.off_icon_region);
             this.isSelected = false;
         }
-    },
+    }
 
     /**
      * function called when the object is clicked on
      */
-    onClick : function (/* event */) {
+    onClick(/* event */) {
         this.setSelected(!this.isSelected);
         // don't propagate the event
         return false;
-    },
+    }
 
-    draw: function(renderer) {
-        this._super(me.GUI_Object, "draw", [ renderer ]);
+    draw(renderer) {
+        super.draw(renderer);
         this.font.draw(renderer,
             " " + (this.isSelected ? this.label_on : this.label_off),
             this.pos.x + this.width,
             this.pos.y + this.height / 2
         );
     }
-});
+};

@@ -1,4 +1,4 @@
-game.resources = [
+var resources = [
     // UI Texture
     { name: "UI_Assets-0", type: "image", src: "data/img/UI_Assets-0.png" },
     { name: "UI_Assets-1", type: "image", src: "data/img/UI_Assets-1.png" },
@@ -12,3 +12,5 @@ game.resources = [
     // font face
     { name: "'kenpixel'", type: "fontface",  src: "url('data/font/kenvector_future.woff2')" }
 ];
+
+export default resources;

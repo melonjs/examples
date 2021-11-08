@@ -1,16 +1,17 @@
-/**
-* a UI container
-*/
-
-game.UI = game.UI || {};
+import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import game from "./../index.js";
 
 // a Panel type container
-game.UI.Container = me.Container.extend({
+class UIContainer extends me.Container {
 
-    init: function(x, y, width, height, label) {
+    constructor(x, y, width, height, label) {
         // call the constructor
-        this._super(me.Container, "init", [x, y, width, height]);
+        super(x, y, width, height);
 
+        // make sure the UI Container bounds are updated
+        this.enableChildBoundsUpdate = true;
+
+        // [0, 0] as origin
         this.anchorPoint.set(0, 0);
 
         // persistent across level change
@@ -48,48 +49,49 @@ game.UI.Container = me.Container.extend({
         this.hover = false;
         // to memorize where we grab the shape
         this.grabOffset = new me.Vector2d(0,0);
-    },
+    }
 
-    onActivateEvent: function () {
+    onActivateEvent() {
         // register on the global pointermove event
-        this.handler = me.event.subscribe(me.event.POINTERMOVE, this.pointerMove.bind(this));
+        me.event.on(me.event.POINTERMOVE, this.pointerMove, this);
         //register on mouse/touch event
         me.input.registerPointerEvent("pointerdown", this, this.onSelect.bind(this));
         me.input.registerPointerEvent("pointerup", this, this.onRelease.bind(this));
         me.input.registerPointerEvent("pointercancel", this, this.onRelease.bind(this));
 
         // call the parent function
-        this._super(me.Container, "onActivateEvent");
-    },
+        super.onActivateEvent();
+    }
 
-    onDeactivateEvent: function () {
+    onDeactivateEvent() {
         // unregister on the global pointermove event
-        me.event.unsubscribe(this.handler);
+        me.event.off(this.pointerMove);
         // release pointer events
         me.input.releasePointerEvent("pointerdown", this);
         me.input.releasePointerEvent("pointerup", this);
         me.input.releasePointerEvent("pointercancel", this);
 
         // call the parent function
-        this._super(me.Container, "onDeactivateEvent");
-    },
+        super.onDeactivateEvent();
+    }
 
     /**
      * pointermove function
      */
-    pointerMove: function (event) {
+    pointerMove(event) {
         this.hover = this.getBounds().contains(event.gameX, event.gameY);
 
         if (this.selected) {
             // follow the pointer
             this.pos.set(event.gameX, event.gameY, this.pos.z);
             this.pos.sub(this.grabOffset);
-            this.updateChildBounds();
         }
-    },
+        // mark the container for redraw
+        this.isDirty = true;
+    }
 
     // mouse down function
-    onSelect : function (event) {
+    onSelect(event) {
         if (this.hover === true) {
             this.grabOffset.set(event.gameX, event.gameY);
             this.grabOffset.sub(this.pos);
@@ -97,21 +99,15 @@ game.UI.Container = me.Container.extend({
             // don"t propagate the event furthermore
             return false;
         }
-    },
+    }
 
     // mouse up function
-    onRelease : function (/*event*/) {
+    onRelease(/*event*/) {
         this.selected = false;
-    },
+    }
 
-    // update function
-    update : function(dt) {
-        this._super(me.Container, "update", [ dt ]);
-        return true;
-    },
-
-    draw: function(renderer) {
-        this._super(me.Container, "draw", [ renderer ]);
+    draw(renderer) {
+        super.draw(renderer);
         this.font.draw(
             renderer,
             this.label,
@@ -119,5 +115,5 @@ game.UI.Container = me.Container.extend({
             16, // panel border
         );
     }
-
-});
+};
+export default UIContainer;
