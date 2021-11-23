@@ -1,4 +1,4 @@
-import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import * as me from "https://esm.run/melonjs@10.2";
 import game from "./../index.js";
 
 /**
@@ -26,7 +26,8 @@ export class ButtonUI extends me.GUI_Object {
             size: 12,
             fillStyle: "black",
             textAlign: "center",
-            textBaseline: "middle"
+            textBaseline: "middle",
+            offScreenCanvas: (me.video.renderer.WebGLVersion >= 1)
         });
 
         this.label = label;
@@ -112,7 +113,8 @@ export class CheckBoxUI extends me.GUI_Object {
             fillStyle: "black",
             textAlign: "left",
             textBaseline: "middle",
-            text: this.label_off
+            text: this.label_off,
+            offScreenCanvas: (me.video.renderer.WebGLVersion >= 1)
         });
 
         // extend the button Bounding Box to include the label size

@@ -1,4 +1,4 @@
-import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import * as me from "https://esm.run/melonjs@10.2";
 import game from "./../index.js";
 
 // a Panel type container
@@ -24,12 +24,10 @@ class UIContainer extends me.Container {
         this.name = "UIPanel";
 
         // back panel sprite
-        this.panelSprite = game.texture.createSpriteFromName("grey_panel");
-        this.panelSprite.anchorPoint.set(0, 0);
-        // scale to match the container size
-        this.panelSprite.scale(
-            this.width / this.panelSprite.width,
-            this.height / this.panelSprite.height
+        this.panelSprite = game.texture.createSpriteFromName(
+            "grey_panel",
+            { width : this.width, height : this.height},
+            true
         );
         this.addChild(this.panelSprite);
 
@@ -39,7 +37,8 @@ class UIContainer extends me.Container {
             fillStyle: "black",
             textAlign: "center",
             textBaseline: "top",
-            bold: true
+            bold: true,
+            offScreenCanvas: (me.video.renderer.WebGLVersion >= 1)
         });
 
         this.label = label;

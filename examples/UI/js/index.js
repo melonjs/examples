@@ -1,13 +1,13 @@
-import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
-import PlayScreen from './screens/play.js';
-import resources from './resources.js';
+import * as me from "https://esm.run/melonjs@10.2";
+import PlayScreen from "./screens/play.js";
+import resources from "./resources.js";
 
 /* Game namespace */
 var game = {
     // Run on page load.
     "onload" : function () {
         // Initialize the video.
-        if (!me.video.init(800, 600, {parent : "screen", scale : "auto", scaleMethod : "flex-width", renderer : me.video.CANVAS})) {
+        if (!me.video.init(800, 600, {parent : "screen", scale : "auto", scaleMethod : "flex-width", renderer : me.video.AUTO})) {
             alert("Your browser does not support HTML5 canvas.");
             return;
         }
