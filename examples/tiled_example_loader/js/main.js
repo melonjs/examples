@@ -30,7 +30,7 @@ var game = {
     loaded: function () {
 
         // subscribe to key down and mouse scroll event to move the map
-        me.event.subscribe(me.event.KEYDOWN, this.keyPressed.bind(this));
+        me.event.on(me.event.KEYDOWN, this.keyPressed.bind(this));
         me.input.registerPointerEvent("wheel", me.game.viewport, this.onScroll.bind(this));
 
         // load default level
@@ -113,16 +113,16 @@ var game = {
 
         // navigate the map :)
         if (keyCode === me.input.KEY.LEFT) {
-            me.game.viewport.move(-(me.levelDirector.getCurrentLevel().tilewidth / 2), 0);
+            me.game.viewport.move(-(me.level.getCurrentLevel().tilewidth / 2), 0);
         }
         if (keyCode === me.input.KEY.RIGHT) {
-            me.game.viewport.move(me.levelDirector.getCurrentLevel().tilewidth / 2, 0);
+            me.game.viewport.move(me.level.getCurrentLevel().tilewidth / 2, 0);
         }
         if (keyCode === me.input.KEY.UP) {
-            me.game.viewport.move(0, -(me.levelDirector.getCurrentLevel().tileheight / 2));
+            me.game.viewport.move(0, -(me.level.getCurrentLevel().tileheight / 2));
         }
         if (keyCode === me.input.KEY.DOWN) {
-            me.game.viewport.move(0, me.levelDirector.getCurrentLevel().tileheight / 2);
+            me.game.viewport.move(0, me.level.getCurrentLevel().tileheight / 2);
         }
 
         // shake it
@@ -199,7 +199,7 @@ var game = {
         };
 
         // load the new level
-        me.levelDirector.loadLevel(level, {
+        me.level.load(level, {
             "container" : me.game.world,
             "onLoaded"  : this.onLevelLoaded.bind(this)
         });
