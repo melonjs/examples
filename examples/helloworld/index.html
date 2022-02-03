@@ -8,12 +8,12 @@
         <!-- script -->
         <script type="module">
 
-            import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+            import * as me from 'https://esm.run/melonjs';
 
             // upon device ready
             me.device.onReady(function () {
                 // Initialize the video.
-                if (!me.video.init(1218, 562, {parent : "screen", scale : "auto"})) {
+                if (!me.video.init(1218, 562, {parent : "screen", scale : "auto", renderer : me.video.CANVAS})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }

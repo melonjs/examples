@@ -1,4 +1,4 @@
-import * as me from "https://esm.run/melonjs@10.2";
+import * as me from 'https://esm.run/melonjs';
 import game from "./../index.js";
 
 /**
@@ -53,9 +53,10 @@ export class ButtonUI extends me.GUI_Object {
     /**
      * function called when the object is clicked on
      */
-    onClick(/* event */) {
+    onClick(event) {
         this.translate(0, this.height - this.clicked_region.height);
         this.setRegion(this.clicked_region);
+        console.log(event);
         // don't propagate the event
         return false;
     }

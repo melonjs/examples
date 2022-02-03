@@ -1,4 +1,4 @@
-game.resources = [
+var resources = [
 
     // Physic Editor Sprite
     { name: "drink",        type: "image",  src: "drink.png" },
@@ -12,3 +12,5 @@ game.resources = [
     // Physic Editor JSON shape definition
     { name: "shapesdef",   type: "json",  src: "physic-editor/shapesdef.json" }
 ];
+
+export default resources;

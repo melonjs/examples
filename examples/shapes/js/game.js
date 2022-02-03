@@ -1,13 +1,23 @@
+import * as me from 'https://esm.run/melonjs';
+import DebugPanelPlugin from './plugin/debug/debugPanel.js';
+
+import resources from './resources.js';
+import PlayScreen from './screens/play.js';
+
 
 /* Game namespace */
 var game = {
     // Run on page load.
-    "onload" : function () {
+    onload : function () {
+
         // Initialize the video.
         if (!me.video.init(640, 480, {parent : "screen", scaleMethod : "flex", renderer : me.video.CANVAS})) {
             alert("Your browser does not support HTML5 canvas.");
             return;
         }
+
+        // add the Debug Panel
+        me.utils.function.defer(me.plugin.register, this, DebugPanelPlugin, "debugPanel");
 
         // configure base URLs
         me.loader.setBaseURL("image", "data/img/");
@@ -15,7 +25,7 @@ var game = {
         me.loader.setBaseURL("audio", "data/audio/");
 
         // set all ressources to be loaded
-        me.loader.preload(game.resources, this.loaded.bind(this));
+        me.loader.preload(resources, this.loaded.bind(this));
     },
 
 
@@ -25,10 +35,10 @@ var game = {
     loaded: function () {
 
         // set the "Play/Ingame" Screen Object
-        me.state.set(me.state.PLAY, new game.PlayScreen());
+        me.state.set(me.state.PLAY, new PlayScreen());
 
         // add some keyboard shortcuts
-        me.event.subscribe(me.event.KEYDOWN, function (action, keyCode /*, edge */) {
+        me.event.on(me.event.KEYDOWN, (action, keyCode /*, edge */) => {
 
             // toggle fullscreen on/off
             if (keyCode === me.input.KEY.F) {
@@ -44,3 +54,5 @@ var game = {
         me.state.change(me.state.PLAY);
     }
 };
+
+export default game;

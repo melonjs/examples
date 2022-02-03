@@ -1,4 +1,4 @@
-import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import * as me from 'https://esm.run/melonjs';
 import game from './../game.js';
 
 class PlayerEntity extends me.Entity {
@@ -35,6 +35,9 @@ class PlayerEntity extends me.Entity {
         me.input.bindKey(me.input.KEY.D,     "right");
         me.input.bindKey(me.input.KEY.W,     "jump", true);
         me.input.bindKey(me.input.KEY.S,     "down");
+
+        //me.input.registerPointerEvent("pointerdown", this, this.onCollision.bind(this));
+        //me.input.bindPointer(me.input.pointer.RIGHT, me.input.KEY.LEFT);
 
         me.input.bindGamepad(0, {type: "buttons", code: me.input.GAMEPAD.BUTTONS.FACE_1}, me.input.KEY.UP);
         me.input.bindGamepad(0, {type: "buttons", code: me.input.GAMEPAD.BUTTONS.FACE_2}, me.input.KEY.UP);

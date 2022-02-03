@@ -1,9 +1,11 @@
-game.Sprite = me.Sprite.extend({
+import * as me from 'https://esm.run/melonjs';
+
+class Sprite extends me.Sprite {
      /**
      * constructor
      */
-    init: function (x, y, settings) {
-        this._super(me.Sprite, "init", [ x, y, {image: settings.sprite} ]);
+    constructor(x, y, settings) {
+        super(x, y, {image: settings.sprite});
 
         // add a physic body
         this.body = new me.Body(this);
@@ -15,6 +17,8 @@ game.Sprite = me.Sprite.extend({
             this.body.addShape(me.loader.getJSON("shapesdef")[settings.sprite]);
         }
 
+        this.body.setStatic();
+
         // status flags
         this.selected = false;
         this.hover = false;
@@ -24,34 +28,38 @@ game.Sprite = me.Sprite.extend({
 
         // to memorize where we grab the sprite
         this.grabOffset = new me.Vector2d(0,0);
-    },
 
-    onActivateEvent: function () {
+        // half transparent when not selected
+        this.setOpacity(0.5);
+    }
+
+    onActivateEvent() {
         //register on mouse/touch event
         me.input.registerPointerEvent("pointerdown", this, this.onSelect.bind(this));
         me.input.registerPointerEvent("pointerup", this, this.onRelease.bind(this));
         me.input.registerPointerEvent("pointercancel", this, this.onRelease.bind(this));
         me.input.registerPointerEvent("pointermove", this, this.pointerMove.bind(this));
         me.input.registerPointerEvent("wheel", this, this.onScroll.bind(this));
-    },
+    }
 
     /**
      * pointermove function
      */
-    pointerMove: function (event) {
+    pointerMove(event) {
         if (this.selected) {
             // follow the pointer
             this.pos.set(event.gameX, event.gameY, this.pos.z);
             this.pos.sub(this.grabOffset);
+            this.isDirty = true;
             // don't propagate the event furthermore
             return false;
         }
-    },
+    }
 
     /**
      * pointermove function
      */
-    onScroll: function (event) {
+    onScroll(event) {
         if (this.selected) {
             // default anchor point for renderable is 0.5, 0.5
             this.rotate(event.deltaY);
@@ -59,14 +67,15 @@ game.Sprite = me.Sprite.extend({
             // by default body rotate around the body center
             this.body.rotate(event.deltaY);
 
+            this.isDirty = true;
+
             // don't propagate the event furthermore
             return false;
         }
-    },
-
+    }
 
     // mouse down function
-    onSelect : function (event) {
+    onSelect(event) {
         if (this.selected === false) {
             // manually calculate the relative coordinates for the body shapes
             // since only the bounding box is used by the input event manager
@@ -80,32 +89,22 @@ game.Sprite = me.Sprite.extend({
             if (this.selected) {
                 this.grabOffset.set(event.gameX, event.gameY);
                 this.grabOffset.sub(this.pos);
+                this.setOpacity(1.0);
             }
+            this.isDirty = true;
         }
         // don't propagate the event furthermore if selected
         return !this.selected;
-    },
+    }
 
     // mouse up function
-    onRelease : function (/*event*/) {
+    onRelease(/*event*/) {
         this.selected = false;
+        this.setOpacity(0.5);
+        this.isDirty = true;
         // don't propagate the event furthermore
         return false;
-    },
-
-    /**
-     * update function
-     */
-    update: function () {
-        this._super(me.Sprite, "update");
-        return this.selected;
-    },
-
-    /**
-     * draw the square
-     */
-    draw: function (renderer) {
-        renderer.setGlobalAlpha(this.selected ? 1.0 : 0.5);
-        this._super(me.Sprite, "draw", [renderer]);
     }
-});
+};
+
+export default Sprite;

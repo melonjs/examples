@@ -1,27 +1,34 @@
 import * as me from 'https://esm.run/melonjs';
+
 /*
 * MelonJS Game Engine
 * Copyright (C) 2011 - 2021 Olivier Biot
 * http://www.melonjs.org
 */
+
+
+
+// ensure that debug is defined
+var debug = {};
+
 var DEBUG_HEIGHT = 50;
 
-class Counters {
-    constructor(name) {
-        this.stats = [];
-    }
-    reset() {
-        Object.keys(this.stats).forEach((stat) => {
-            this.stats[stat] = 0;
-        });
-    }
-    inc(stat, value) {
-        this.stats[stat] += (value || 1);
-    }
-    get(stat) {
-        return this.stats[stat] || 0;
-    }
-};
+var Counters = function(name) {
+    this.stats = [];
+    this.reset(this.stats);
+}
+Counters.prototype.reset = function(stats) {
+    var self = this;
+    (stats || Object.keys(this.stats)).forEach(function (stat) {
+        self.stats[stat] = 0;
+    });
+}
+Counters.prototype.inc = function(stat, value) {
+    this.stats[stat] += (value || 1);
+}
+Counters.prototype.get = function(stat) {
+    return this.stats[stat] || 0;
+}
 
 // embedded bitmap font data
 var fontDataSource =
@@ -130,7 +137,7 @@ var fontImageSource = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAY
 
 class DebugPanel extends me.Renderable {
     /** @private */
-    constructor(debugToggle = me.input.KEY.S) {
+    constructor(debugToggle) {
         // call the super constructor
         super(0, 0, me.video.renderer.getWidth(), DEBUG_HEIGHT );
 
@@ -140,9 +147,9 @@ class DebugPanel extends me.Renderable {
         // minimum melonJS version expected
         this.version = "10.0.0";
 
-        // to hold the debug CheckBox
-        // zone and status
-        this.checkbox = {};
+        // to hold the debug options
+        // clickable rect area
+        this.area = {};
 
         // Useful counters
         this.counters = new Counters([
@@ -211,19 +218,17 @@ class DebugPanel extends me.Renderable {
         fontDataSource = null;
 
         // clickable areas
-        var hash = me.utils.getUriFragment();
         var size = 10 * this.mod;
-        this.checkbox.renderHitBox = new me.Rect(250, 2,  size, size);
-        this.checkbox.renderHitBox.selected = hash.hitbox || false;
-        this.checkbox.renderVelocity = new me.Rect(250, 17, size, size);
-        this.checkbox.renderVelocity.selected = hash.velocity || false;
-        this.checkbox.renderQuadTree = new me.Rect(410, 2,  size, size);
-        this.checkbox.renderVelocity.selected = hash.quadtree || false;
+        this.area.renderHitBox   = new me.Rect(250, 2,  size, size);
+        this.area.renderVelocity = new me.Rect(250, 17, size, size);
+        this.area.renderQuadTree = new me.Rect(410, 2,  size, size);
+
+        var self = this;
 
         // add some keyboard shortcuts
-        this.debugToggle = debugToggle;
-        this.keyHandler = me.event.on(me.event.KEYDOWN, (action, keyCode) => {
-            if (keyCode === this.debugToggle) {
+        this.debugToggle = debugToggle || me.input.KEY.S;
+        this.keyHandler = me.event.on(me.event.KEYDOWN, function (action, keyCode) {
+            if (keyCode === self.debugToggle) {
                 me.plugins.debugPanel.toggle();
             }
         });
@@ -235,9 +240,16 @@ class DebugPanel extends me.Renderable {
         this.memoryPositionX = 325 * this.mod;
 
         // resize the panel if the browser is resized
-        me.event.on(me.event.CANVAS_ONRESIZE, (w) => {
-            this.resize(w, DEBUG_HEIGHT);
+        me.event.on(me.event.CANVAS_ONRESIZE, function (w) {
+            self.resize(w, DEBUG_HEIGHT);
         });
+
+        var hash = me.utils.getUriFragment();
+
+        // add a few new debug flag (if not yet defined)
+        debug.renderHitBox   = hash.hitbox || false;
+        debug.renderVelocity = hash.velocity || false;
+        debug.renderQuadTree = hash.quadtree || false;
 
         // few variables to keep track of time
         this.frameUpdateStartTime = 0;
@@ -304,7 +316,7 @@ class DebugPanel extends me.Renderable {
                     && !(this instanceof me.ImageLayer)) {
 
                     // draw the renderable bounding box
-                    if (_this.checkbox.renderHitBox.selected && this.getBounds().isFinite()) {
+                    if (debug.renderHitBox && this.getBounds().isFinite()) {
 
                         if (typeof this.ancestor !== "undefined") {
                             var absolutePosition = this.ancestor.getAbsolutePosition();
@@ -359,7 +371,7 @@ class DebugPanel extends me.Renderable {
             this._patched.apply(this, arguments);
 
             // draw the font rectangle
-            if (_this.visible && _this.checkbox.renderHitBox.selected && this.name !== "debugPanelFont") {
+            if (_this.visible && debug.renderHitBox && this.name !== "debugPanelFont") {
                 var bounds = this.getBounds();
 
                 if (typeof this.ancestor !== "undefined") {
@@ -387,7 +399,7 @@ class DebugPanel extends me.Renderable {
             this._patched.apply(this, arguments);
 
             // call the original me.Sprite.draw function
-            if (_this.visible && _this.checkbox.renderHitBox.selected) {
+            if (_this.visible && debug.renderHitBox) {
                 if (typeof this.ancestor === "undefined") {
                     renderer.save();
                 }
@@ -406,7 +418,7 @@ class DebugPanel extends me.Renderable {
             if (_this.visible) {
 
                 // check if debug mode is enabled
-                if (_this.checkbox.renderHitBox.selected) {
+                if (debug.renderHitBox) {
                     renderer.save();
 
                     renderer.translate(
@@ -439,7 +451,7 @@ class DebugPanel extends me.Renderable {
                     renderer.restore();
                 }
 
-                if (_this.checkbox.renderVelocity.selected && (this.body.vel.x || this.body.vel.y)) {
+                if (debug.renderVelocity && (this.body.vel.x || this.body.vel.y)) {
                     var bounds = this.getBounds();
                     var hWidth = bounds.width / 2;
                     var hHeight = bounds.height / 2;
@@ -506,14 +518,14 @@ class DebugPanel extends me.Renderable {
     /** @private */
     onClick(e)  {
         // check the clickable areas
-        if (this.checkbox.renderHitBox.contains(e.gameX, e.gameY)) {
-            this.checkbox.renderHitBox.selected = !this.checkbox.renderHitBox.selected;
-        } else if (this.checkbox.renderVelocity.contains(e.gameX, e.gameY)) {
+        if (this.area.renderHitBox.contains(e.gameX, e.gameY)) {
+            debug.renderHitBox = !debug.renderHitBox;
+        } else if (this.area.renderVelocity.contains(e.gameX, e.gameY)) {
             // does nothing for now, since velocity is
             // rendered together with hitboxes (is a global debug flag required?)
-            this.checkbox.renderVelocity.selected = !this.checkbox.renderVelocity.selected;
-        } else if (this.checkbox.renderQuadTree.contains(e.gameX, e.gameY)) {
-            this.checkbox.renderQuadTree.selected = !this.checkbox.renderQuadTree.selected;
+            debug.renderVelocity = !debug.renderVelocity;
+        } else if (this.area.renderQuadTree.contains(e.gameX, e.gameY)) {
+            debug.renderQuadTree = !debug.renderQuadTree;
         }
         // force repaint
         me.game.repaint();
@@ -579,7 +591,7 @@ class DebugPanel extends me.Renderable {
         renderer.save();
 
         // draw the QuadTree (before the panel)
-        if (this.checkbox.renderQuadTree.selected === true) {
+        if (debug.renderQuadTree === true) {
             this.drawQuadTree(renderer);
         }
 
@@ -599,10 +611,10 @@ class DebugPanel extends me.Renderable {
         this.font.draw(renderer, "#draws   : " + me.game.world.drawCount, 5 * this.mod, 10 * this.mod);
 
         // debug checkboxes
-        this.font.draw(renderer, "?hitbox   [" + (this.checkbox.renderHitBox.selected ? "x" : " ") + "]",   75 * this.mod, 2 * this.mod);
-        this.font.draw(renderer, "?velocity [" + (this.checkbox.renderVelocity.selected ? "x" : " ") + "]", 75 * this.mod, 10 * this.mod);
+        this.font.draw(renderer, "?hitbox   [" + (debug.renderHitBox ? "x" : " ") + "]",   75 * this.mod, 2 * this.mod);
+        this.font.draw(renderer, "?velocity [" + (debug.renderVelocity ? "x" : " ") + "]", 75 * this.mod, 10 * this.mod);
 
-        this.font.draw(renderer, "?QuadTree [" + (this.checkbox.renderQuadTree.selected ? "x" : " ") + "]", 150 * this.mod, 2 * this.mod);
+        this.font.draw(renderer, "?QuadTree [" + (debug.renderQuadTree ? "x" : " ") + "]", 150 * this.mod, 2 * this.mod);
 
         // draw the update duration
         this.font.draw(renderer, "Update : " + this.frameUpdateTime.toFixed(2) + " ms", 225 * this.mod, 2 * this.mod);
@@ -690,7 +702,7 @@ class DebugPanel extends me.Renderable {
  * // load the debugPanel in your index.html file
  * <script type="text/javascript" src="plugins/debug/debugPanel.js"></script>
  */
-export class DebugPanelPlugin extends me.plugin.Base {
+class DebugPanelPlugin extends me.plugin.Base {
     /** @private */
     constructor(debugToggle) {
         // call the super constructor
@@ -737,3 +749,5 @@ export class DebugPanelPlugin extends me.plugin.Base {
         }
     }
 };
+
+export default DebugPanelPlugin;

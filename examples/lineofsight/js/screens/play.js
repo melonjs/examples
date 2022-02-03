@@ -1,66 +1,35 @@
-game.PlayScreen = me.Stage.extend({
+import * as me from 'https://esm.run/melonjs';
+import Square from './../entities/entities.js';
+
+class PlayScreen extends me.Stage {
     /**
      *  action to perform on state change
      */
-    onResetEvent: function() {
+    onResetEvent() {
         var rectSize = 150;
 
         // clear the background
         me.game.world.addChild(new me.ColorLayer("background", "black"), 0);
 
         // add a few shapes
-        me.game.world.addChild(new game.Square(50, 50, rectSize, rectSize), 1);
-        me.game.world.addChild(new game.Square(50, 400, rectSize, rectSize), 1);
-        me.game.world.addChild(new game.Square(300, 125, rectSize, rectSize), 1);
-        me.game.world.addChild(new game.Square(300, 350, rectSize, rectSize), 1);
-        me.game.world.addChild(new game.Square(600, 200, rectSize, rectSize), 1);
-        me.game.world.addChild(new game.Square(600, 400, rectSize, rectSize), 1);
+        me.game.world.addChild(new Square(50, 50, rectSize, rectSize), 1);
+        me.game.world.addChild(new Square(50, 400, rectSize, rectSize), 1);
+        me.game.world.addChild(new Square(300, 125, rectSize, rectSize), 1);
+        me.game.world.addChild(new Square(300, 350, rectSize, rectSize), 1);
+        me.game.world.addChild(new Square(600, 200, rectSize, rectSize), 1);
+        me.game.world.addChild(new Square(600, 400, rectSize, rectSize), 1);
 
-        me.game.repaint();
-
-        // display the current pointer coordinates on top of the pointer arrow
-        // and some helper text at the bottom of the viewport
-        me.game.world.addChild(new (me.Renderable.extend({
-            init: function() {
-                this._super(me.Renderable, 'init', [0, 0, 10, 10]);
-                this.font = new me.Text(0, 0, {
-                    font: "Arial",
-                    fillStyle : "#FFFFFF",
-                    size: 10,
-                    textAlign : "center",
-                    textBaseline : "bottom"
-                });
-            },
-            update : function (dt) {
-                return true;
-            },
-            draw: function(renderer) {
-                var x = Math.round(me.input.pointer.gameWorldX);
-                var y = Math.round(me.input.pointer.gameWorldY);
-
-                // cursor coordinates
-                this.font.draw(renderer, "( " + x + "," + y + " )", x, y);
-
-                this.font.draw(
-                    renderer,
-                    "drag the square to check for intersection witht the line",
-                    150,
-                    me.game.viewport.height
-                );
-            }
-        })), 10);
-
-        // basic renderable that cast a ray across the world
-        me.game.world.addChild(new (me.Renderable.extend({
-            init: function() {
-                this._super(me.Renderable, 'init', [0, 0, 10, 10]);
+        // basic renderable that cast a ray across the world and check for collision
+        class Line extends me.Renderable {
+            constructor() {
+                super(0, 0, 10, 10);
                 this.line = new me.Line(0, 0, [
                     new me.Vector2d(me.game.viewport.width / 2, me.game.viewport.height / 2),
                     new me.Vector2d(me.game.viewport.width, me.game.viewport.height)
                 ]);
 
-            },
-            update : function (dt) {
+            }
+            update(dt) {
                 this.line.rotate(0.0125, new me.Vector2d(me.game.viewport.width / 2, me.game.viewport.height / 2));
                 var result = me.collision.rayCast(this.line);
 
@@ -71,11 +40,14 @@ game.PlayScreen = me.Stage.extend({
                     }
                 }
                 return true;
-            },
-            draw: function(renderer) {
+            }
+            draw(renderer) {
                 renderer.setColor("red");
                 renderer.stroke(this.line);
             }
-        })), 10);
+        }
+        me.game.world.addChild(new Line(), 10);
     }
-});
+};
+
+export default PlayScreen;

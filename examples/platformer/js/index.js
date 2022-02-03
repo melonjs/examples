@@ -1,4 +1,4 @@
-import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import * as me from 'https://esm.run/melonjs';
 
 import game from './game.js';
 import resources from './resources.js';
@@ -6,7 +6,6 @@ import PlayerEntity from './entities/player.js';
 import { SlimeEnemyEntity, FlyEnemyEntity } from './entities/enemies.js';
 import CoinEntity from './entities/coin.js';
 import PlayScreen from './screens/play.js';
-import DebugPanelPlugin from './plugin/debug/debugPanel.js';
 
 
 /**
@@ -22,7 +21,10 @@ export default function onload() {
     }
 
     // initialize the Debug Panel
-    me.utils.function.defer(me.plugin.register, this, DebugPanelPlugin, "debugPanel");
+    import('./plugin/debug/debugPanel.js').then((plugin) => {
+        // automatically register the debug panel
+        me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
+    });
 
 
     // initialize the "sound engine"

@@ -11,7 +11,7 @@ var game = {
         score : 0
     },
 
-    // a reference to the texture atals
+    // a reference to the texture atlas
     texture : null
 };
 

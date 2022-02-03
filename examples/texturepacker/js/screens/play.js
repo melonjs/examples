@@ -1,4 +1,4 @@
-import * as me from 'https://cdn.jsdelivr.net/npm/melonjs@10/dist/melonjs.module.min.js';
+import * as me from 'https://esm.run/melonjs';
 import CapGuyEntity from "./../entities/entities.js";
 import game from "./../index.js";
 

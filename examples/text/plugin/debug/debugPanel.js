@@ -1,9 +1,12 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from './../../../../../melonJS/build/melonjs.module.js';
+
 /*
 * MelonJS Game Engine
 * Copyright (C) 2011 - 2021 Olivier Biot
 * http://www.melonjs.org
 */
+
+
 var DEBUG_HEIGHT = 50;
 
 class Counters {
@@ -324,6 +327,10 @@ class DebugPanel extends me.Renderable {
                         renderer.setColor("green");
                         renderer.stroke(this.getBounds());
 
+                        if (typeof this.ancestor !== "undefined") {
+                            renderer.restore();
+                        }
+
                         // the sprite mask if defined
                         if (typeof this.mask !== "undefined") {
                             renderer.setColor("orange");
@@ -344,10 +351,6 @@ class DebugPanel extends me.Renderable {
                                 _this.counters.inc("shapes");
                             }
                             renderer.translate(-bounds.x, -bounds.y);
-                        }
-
-                        if (typeof this.ancestor !== "undefined") {
-                            renderer.restore();
                         }
                     }
                 }
@@ -690,7 +693,7 @@ class DebugPanel extends me.Renderable {
  * // load the debugPanel in your index.html file
  * <script type="text/javascript" src="plugins/debug/debugPanel.js"></script>
  */
-export class DebugPanelPlugin extends me.plugin.Base {
+class DebugPanelPlugin extends me.plugin.Base {
     /** @private */
     constructor(debugToggle) {
         // call the super constructor
@@ -737,3 +740,5 @@ export class DebugPanelPlugin extends me.plugin.Base {
         }
     }
 };
+
+export default DebugPanelPlugin;

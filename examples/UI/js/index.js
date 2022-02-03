@@ -1,4 +1,4 @@
-import * as me from "https://esm.run/melonjs@10.2";
+import * as me from 'https://esm.run/melonjs';
 import PlayScreen from "./screens/play.js";
 import resources from "./resources.js";
 

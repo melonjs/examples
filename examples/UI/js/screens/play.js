@@ -1,4 +1,4 @@
-import * as me from "https://esm.run/melonjs@10.2";
+import * as me from 'https://esm.run/melonjs';
 import UIContainer from "./../entities/UIContainer.js";
 import {CheckBoxUI, ButtonUI} from "./../entities/buttons.js";
 import game from "./../index.js";
