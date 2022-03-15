@@ -1,12 +1,10 @@
-var game = {};
+import * as me from 'https://esm.run/melonjs@10.5';
 
-game.square = me.DraggableEntity.extend({
-    /**
-     * constructor
-     */
-    init: function (x, y, settings) {
+export class Square extends me.Draggable {
+
+    constructor(x, y, settings) {
         // call the super constructor
-        this._super(me.DraggableEntity, "init", [x, y, settings]);
+        super(x, y, settings.width, settings.height);
         // set the color to white
         this.color = "white";
         // set the font we want to use
@@ -14,45 +12,46 @@ game.square = me.DraggableEntity.extend({
         this.font.bold();
         // set the text
         this.text = "Drag me";
-    },
+    }
     /**
      * update function
      */
-    update: function () {
+    update(dt) {
+        super.update(dt);
         return true;
-    },
+    }
     /**
      * draw the square
      */
-    draw: function (renderer) {
+    draw(renderer) {
         renderer.setColor(this.color);
-        renderer.fillRect(0, 0, this.width, this.height);
-        this.font.draw(renderer, this.text, 0, 0);
-    },
+        renderer.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+        this.font.draw(renderer, this.text, this.pos.x, this.pos.y);
+    }
     /**
      * dragStart overwrite function
      */
-    dragStart: function (e) {
+    dragStart(e) {
         // call the super function
-        this._super(me.DraggableEntity, "dragStart", [e]);
+        super.dragStart(e);
         // set the color to blue
         this.color = "blue";
-    },
-    dragEnd: function (e) {
+    }
+    dragEnd(e) {
         // call the super function
-        this._super(me.DraggableEntity, "dragEnd", [e]);
+        super.dragEnd(e);
         // set the color to white
         this.color = "white";
     }
-});
+};
 
-game.droptarget = me.DroptargetEntity.extend({
+export class DropTarget extends me.DropTarget {
     /**
      * constructor
      */
-    init: function (x, y, settings) {
+    constructor(x, y, settings) {
         // call the parent constructor
-        this._super(me.DroptargetEntity, "init", [x, y, settings]);
+        super(x, y, settings.width, settings.height);
         // set the color to white
         this.color = "red";
         // set the font we want to use
@@ -61,29 +60,30 @@ game.droptarget = me.DroptargetEntity.extend({
         this.font.bold();
         // set the text
         this.text = "Drop on me\n\nAnd I\"ll turn green\n\ncheckmethod: overlap";
-    },
+    }
     /**
      * update function
      */
-    update: function () {
+    update(dt) {
+        super.update(dt);
         return true;
-    },
+    }
     /**
      * draw the square
      */
-    draw: function (renderer) {
+    draw(renderer) {
         renderer.setColor(this.color);
-        renderer.fillRect(0, 0, this.width, this.height);
-        this.font.draw(renderer, this.text, 0, 0);
-    },
+        renderer.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+        this.font.draw(renderer, this.text, this.pos.x, this.pos.y, );
+    }
     /**
      * drop overwrite function
      */
-    drop: function (e) {
+    drop(e) {
+        // call the super function
+        super.drop(e);
         // save a reference to this to use in the timeout
         var self = this;
-        // call the super function
-        this._super(me.DroptargetEntity, "draw", [e]);
         // indicate a succesful drop
         this.color = "green";
         // set the color back to red after a second
@@ -91,15 +91,15 @@ game.droptarget = me.DroptargetEntity.extend({
             self.color = "red";
         }, 1000);
     }
-});
+};
 
-game.droptarget2 = game.droptarget.extend({
+export class DropTarget2 extends DropTarget {
     /**
      * constructor
      */
-    init: function (x, y, settings) {
+    constructor(x, y, settings) {
         // call the super constructor
-        this._super(game.droptarget, "init", [x, y, settings]);
+        super(x, y, settings);
         // set the color to white
         this.color = "red";
         // set the font we want to use
@@ -110,4 +110,4 @@ game.droptarget2 = game.droptarget.extend({
         // set the check method to "contains" (default is "overlap")
         this.setCheckMethod(this.CHECKMETHOD_CONTAINS);
     }
-});
+};

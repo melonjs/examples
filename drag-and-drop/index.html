@@ -8,36 +8,29 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-    <!-- melonJS Library -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@9/dist/melonjs.js"></script>
-
-    <!-- Plugin(s) -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@9.0/plugins/debug/debugPanel.js"></script>
-
-    <script type="text/javascript" src="js/square.js"></script>
-
     <!-- Bootstrap -->
-    <script type="text/javascript">
-        me.device.onReady(function onReady() {
+    <script type="module">
+        import * as me from 'https://esm.run/melonjs@10.5';
+        import { Square, DropTarget, DropTarget2 } from './js/square.js';
+
+        me.device.onReady(function () {
             // Initialize the video.
             if (!me.video.init(1024, 768, {scale : "auto", renderer : me.video.CANVAS})) {
                 alert("Your browser does not support HTML5 canvas.");
                 return;
             }
 
-            me.game.world.reset();
-
             // clear the background
             me.game.world.addChild(new me.ColorLayer("background", "#000000", 0), 0);
 
             // add a few squares
-            me.game.world.addChild(new game.square(200, 230, {width: 100, height: 100}), 1);
+            me.game.world.addChild(new Square(200, 230, {width: 100, height: 100}), 1);
 
             // add a droptarget entity
-            me.game.world.addChild(new game.droptarget(400, 200, {width: 200, height: 150}), 1);
+            me.game.world.addChild(new DropTarget(400, 200, {width: 200, height: 150}), 1);
 
             // add another droptarget entity
-            me.game.world.addChild(new game.droptarget2(400, 400, {width: 200, height: 150}), 1);
+            me.game.world.addChild(new DropTarget2(400, 400, {width: 200, height: 150}), 1);
         });
     </script>
 </body>
