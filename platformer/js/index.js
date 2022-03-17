@@ -46,8 +46,8 @@ export default function onload() {
         me.pool.register("CoinEntity", CoinEntity, true);
 
         // load the texture atlas file
-        // this will be used by object entities later
-        game.texture = new me.video.renderer.Texture(
+        // this will be used by renderable object later
+        game.texture = new me.TextureAtlas(
             me.loader.getJSON("texture"),
             me.loader.getImage("texture")
         );
