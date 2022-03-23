@@ -1,8 +1,7 @@
 import * as me from 'https://esm.run/melonjs';
-import DebugPanelPlugin from './plugin/debug/debugPanel.js';
 
 // the font test renderables object
-class FontTest extends me.Renderable {
+export default class TextTest extends me.Renderable {
 
     constructor() {
         super(0, 0, me.video.renderer.getWidth(), me.video.renderer.getHeight());
@@ -27,7 +26,7 @@ class FontTest extends me.Renderable {
             font: "Arial",
             size: 8,
             fillStyle:
-            this.color,
+            "white",
             offScreenCanvas: (me.video.renderer.WebGLVersion >= 1)
         });
 
@@ -52,12 +51,13 @@ class FontTest extends me.Renderable {
         this.font.lineWidth = "2";
         this.font.setOpacity (0.5);
         for (i = 8; i < 48; i += 8) {
-            this.font.setFont("Arial", i, this.color);
+            this.font.setFont("Arial", i);
+            renderer.setTint(this.color);
             this.font.draw(renderer, "Arial Text " + i + "px !" , 5 , yPos );
             yPos += this.font.getBounds().height;
         }
         // one more with drawStroke this time
-        this.font.setFont("Arial", 48, this.color);
+        this.font.setFont("Arial", 48);
         this.font.strokeStyle.parseCSS("red");
         this.font.lineWidth = 3;
         this.font.draw(renderer, "Arial Text " + i + "px !" , 5 , yPos );
@@ -84,7 +84,7 @@ class FontTest extends me.Renderable {
         this.bFont.setOpacity(1);
 
         // font baseline test
-        this.font.setFont("Arial", 16, "white");
+        this.font.setFont("Arial", 16);
         baseline = 200;
 
         // Draw the baseline
@@ -170,31 +170,4 @@ class FontTest extends me.Renderable {
         this.fancyBFont.textAlign = "left";
         this.fancyBFont.textBaseline = "top";
     }
-};
-
-/**
- * Initialize the application
- */
-export default function onload() {
-
-    // Initialize the video.
-    if (!me.video.init(640, 480, {parent : "screen", scale : "auto", renderer: me.video.AUTO, preferWebGL1 : false})) {
-        alert("Your browser does not support HTML5 canvas.");
-        return;
-    }
-
-    // initialize the Debug Panel
-    me.utils.function.defer(me.plugin.register, this, DebugPanelPlugin, "debugPanel");
-
-    // set all ressources to be loaded
-    me.loader.preload([
-        { name: "xolo12", type:"image", src: "xolo12.png"},
-        { name: "xolo12", type:"binary", src: "xolo12.fnt"},
-        { name: "arialfancy", type:"image", src: "arialfancy.png"},
-        { name: "arialfancy", type:"binary", src: "arialfancy.fnt"}],
-        function () {
-            me.game.world.reset();
-            me.game.world.addChild(new FontTest(), 1);
-        }
-    );
 };

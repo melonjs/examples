@@ -4,17 +4,39 @@
   <title>melonJS - Webfont and BitmapText</title>
   <link rel="stylesheet" type="text/css" media="screen" href="index.css">
 </head>
-<body bgcolor="white">
+<body
   <!-- Canvas placeholder -->
   <div id="screen"></div>
 
   <!-- Bootstrap -->
   <script type="module">
-      import { device } from 'https://esm.run/melonjs';
-      import onload from './index.js';
+      import * as me from 'https://esm.run/melonjs';
+      import TextTest from './text.js';
 
-      device.onReady(() => {
-          onload();
+      me.device.onReady(() => {
+          // Initialize the video.
+          if (!me.video.init(640, 480, {parent : "screen", scale : "auto", renderer: me.video.AUTO, preferWebGL1 : false})) {
+              alert("Your browser does not support HTML5 canvas.");
+              return;
+          }
+
+          // initialize the Debug Panel
+          import('./plugin/debug/debugPanel.js').then((plugin) => {
+                  // automatically register the debug panel
+                  me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
+          });
+
+          // set all ressources to be loaded
+          me.loader.preload([
+              { name: "xolo12", type:"image", src: "xolo12.png"},
+              { name: "xolo12", type:"binary", src: "xolo12.fnt"},
+              { name: "arialfancy", type:"image", src: "arialfancy.png"},
+              { name: "arialfancy", type:"binary", src: "arialfancy.fnt"}],
+              function () {
+                  me.game.world.reset();
+                  me.game.world.addChild(new TextTest(), 1);
+              }
+          );
       });
   </script>
 </body>
