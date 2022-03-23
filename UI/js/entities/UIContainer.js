@@ -64,7 +64,7 @@ class UIContainer extends me.Container {
 
     onDeactivateEvent() {
         // unregister on the global pointermove event
-        me.event.off(this.pointerMove);
+        me.event.off(me.event.POINTERMOVE, this.pointerMove);
         // release pointer events
         me.input.releasePointerEvent("pointerdown", this);
         me.input.releasePointerEvent("pointerup", this);
