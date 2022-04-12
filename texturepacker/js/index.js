@@ -21,7 +21,7 @@ var game = {
         // set all ressources to be loaded
         me.loader.preload(resources, () => {
             // load the texture atlas file
-            this.texture = new me.video.renderer.Texture(
+            this.texture = new me.TextureAtlas(
                 me.loader.getJSON("cityscene"),
                 me.loader.getImage("cityscene")
             );
