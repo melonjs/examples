@@ -42,6 +42,7 @@ class PathEnemyEntity extends me.Entity {
         // set a "enemyObject" type
         this.body.collisionType = me.collision.types.ENEMY_OBJECT;
 
+        // only check for collision against player and world shape
         this.body.setCollisionMask(me.collision.types.PLAYER_OBJECT | me.collision.types.WORLD_SHAPE);
 
         // don't update the entities when out of the viewport
