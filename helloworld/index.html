@@ -13,13 +13,13 @@
             // upon device ready
             me.device.onReady(function () {
                 // Initialize the video.
-                if (!me.video.init(1218, 562, {parent : "screen", scale : "auto", renderer : me.video.CANVAS})) {
+                if (!me.video.init(1218, 562, {parent : "screen", scale : "auto"})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }
 
-                // add a gray background layer
-                me.game.world.addChild(new me.ColorLayer("background", "#202020"));
+                // set a gray background color
+                me.game.world.backgroundColor.parseCSS("#202020");
 
                 // add a text object in the center of the display
                 me.game.world.addChild(new me.Text(609, 281, {
