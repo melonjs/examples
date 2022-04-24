@@ -93,28 +93,24 @@ class AudioControl extends me.GUI_Object {
 /**
  * a basic HUD item to display score
  */
-class ScoreItem extends me.Renderable {
+class ScoreItem extends me.BitmapText {
     /**
      * constructor
      */
     constructor(x, y) {
         // call the super constructor
-        // (size does not matter here)
         super(
-            me.game.viewport.width + x,
+            me.game.viewport.width  + x,
             me.game.viewport.height + y,
-            10,
-            10
+            {
+                font : "PressStart2P",
+                textAlign : "right",
+                textBaseline : "bottom",
+                text : "0"
+            }
         );
 
         this.relative = new me.Vector2d(x, y);
-
-        // create a font
-        this.font = new me.BitmapText(0, 0, {
-            font : "PressStart2P",
-            textAlign : "right",
-            textBaseline : "bottom"
-        });
 
         // local copy of the global score
         this.score = -1;
@@ -128,21 +124,13 @@ class ScoreItem extends me.Renderable {
     /**
      * update function
      */
-    update(/*dt*/) {
-        // we don't draw anything fancy here, so just
-        // return true if the score has been updated
+    update( dt ) {
         if (this.score !== game.data.score) {
             this.score = game.data.score;
-            return true;
+            this.setText(this.score);
+            this.isDirty = true;
         }
-        return false;
-    }
-
-    /**
-     * draw the score
-     */
-    draw(renderer) {
-        this.font.draw(renderer, game.data.score, this.pos.x, this.pos.y);
+        return super.update(dt);
     }
 };
 
