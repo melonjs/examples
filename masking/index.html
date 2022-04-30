@@ -46,6 +46,7 @@
                         bg_sprite2.tint.setColor(128, 255, 255);
                         // add a mask
                         bg_sprite2.mask = new me.Ellipse(0, 0, 640, 640);
+                        bg_sprite2.blendMode = "screen";
 
 
                         // create a 3rd one using an Polygon for masking
@@ -74,6 +75,7 @@
                         ]);
                         // scale the mask shape to "fill" the above circle
                         bg_sprite3.mask.scale(5.0);
+                        bg_sprite3.blendMode = "normal";
 
                         // some display text to brag about the result :)
                         var text = new me.Text(
