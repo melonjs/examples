@@ -1,5 +1,4 @@
 import * as me from 'https://esm.run/melonjs';
-import DebugPanelPlugin from './plugin/debug/debugPanel.js';
 
 import resources from './resources.js';
 import PlayScreen from './screens/play.js';
@@ -16,8 +15,12 @@ var game = {
             return;
         }
 
-        // add the Debug Panel
-        me.utils.function.defer(me.plugin.register, this, DebugPanelPlugin, "debugPanel");
+        // initialize the Debug Panel
+        import('./plugin/debug/debugPanel.js').then((plugin) => {
+            // automatically register the debug panel
+            me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
+        });
+
 
         // configure base URLs
         me.loader.setBaseURL("image", "data/img/");
