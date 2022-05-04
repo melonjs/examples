@@ -50,6 +50,9 @@ class PathEnemyEntity extends me.Entity {
 
         // a specific flag to recognize these enemies
         this.isMovingEnemy = true;
+
+        // default tint for particles
+        this.particleTint = "#FFF";
     }
 
 
@@ -89,13 +92,22 @@ class PathEnemyEntity extends me.Entity {
             this.body.setStatic(true);
             // set dead animation
             this.renderable.setCurrentAnimation("dead");
-            // tint to red
-            this.renderable.tint.setColor(255, 192, 192);
-            // make it flicker and call destroy once timer finished
-            var self = this;
-            this.renderable.flicker(750, function () {
-                me.game.world.removeChild(self);
+
+            var emitter = new me.ParticleEmitter(this.centerX, this.centerY, {
+                width: this.width / 4,
+                height : this.height / 4,
+                tint: this.particleTint,
+                totalParticles: 32,
+                angle: 0,
+                angleVariation: 6.283185307179586,
+                maxLife: 5,
+                speed: 3
             });
+
+            me.game.world.addChild(emitter,this.pos.z);
+            me.game.world.removeChild(this);
+            emitter.burstParticles();
+
             // dead sfx
             me.audio.play("enemykill", false);
             // give some score
@@ -139,6 +151,9 @@ export class SlimeEnemyEntity extends PathEnemyEntity {
         // set the renderable position to bottom center
         this.anchorPoint.set(0.5, 1.0);
 
+        // particle tint matching the sprite color
+        this.particleTint = "#FF35B8";
+
     }
 };
 
@@ -174,5 +189,9 @@ export class FlyEnemyEntity extends PathEnemyEntity {
 
         // set the renderable position to bottom center
         this.anchorPoint.set(0.5, 1.0);
+
+        // particle tint matching the sprite color
+        this.particleTint = "#000000";
+
     }
 };

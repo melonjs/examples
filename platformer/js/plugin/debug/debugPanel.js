@@ -1,9 +1,10 @@
-import * as me from 'https://esm.run/melonjs';
 /*
 * MelonJS Game Engine
 * Copyright (C) 2011 - 2021 Olivier Biot
 * http://www.melonjs.org
 */
+import * as me from 'https://esm.run/melonjs';
+
 var DEBUG_HEIGHT = 50;
 
 class Counters {
@@ -136,9 +137,6 @@ class DebugPanel extends me.Renderable {
 
         // enable collision and event detection
         this.isKinematic = false;
-
-        // minimum melonJS version expected
-        this.version = "10.0.0";
 
         // to hold the debug CheckBox
         // zone and status
@@ -381,20 +379,32 @@ class DebugPanel extends me.Renderable {
             }
         });
 
-        // patch font.js
+        // patch text.js
         me.plugin.patch(me.Text, "draw", function (renderer, text, x, y) {
             // call the original me.Text.draw function
             this._patched.apply(this, arguments);
 
-            // call the original me.Sprite.draw function
             if (_this.visible && _this.checkbox.renderHitBox.selected) {
-                if (typeof this.ancestor === "undefined") {
-                    renderer.save();
-                }
-                renderer.setColor("green");
-                renderer.stroke(this.getBounds());
+                var bounds = this.getBounds();
 
-                if (typeof this.ancestor === "undefined") {
+                if (typeof this.ancestor !== "undefined") {
+                    var absolutePosition = this.ancestor.getAbsolutePosition();
+
+                    renderer.save();
+
+                    // if this object of this renderable parent is not the root container
+                    if (!this.root && !this.ancestor.root && this.ancestor.floating) {
+                        renderer.translate(
+                            -absolutePosition.x,
+                            -absolutePosition.y
+                        );
+                    }
+                }
+
+                renderer.setColor("green");
+                renderer.stroke(bounds);
+
+                if (typeof this.ancestor !== "undefined") {
                     renderer.restore();
                 }
             }
@@ -695,6 +705,10 @@ export class DebugPanelPlugin extends me.plugin.Base {
     constructor(debugToggle) {
         // call the super constructor
         super();
+
+        // minimum melonJS version expected
+        this.version = "10.6.0";
+
         this.panel = new DebugPanel(debugToggle);
 
         // if "#debug" is present in the URL
