@@ -3,7 +3,7 @@
 * Copyright (C) 2011 - 2021 Olivier Biot
 * http://www.melonjs.org
 */
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'https://esm.run/melonjs@10.7';
 
 var DEBUG_HEIGHT = 50;
 
