@@ -10,11 +10,11 @@
         <!-- script -->
         <script type="module">
 
-            import * as me from "https://esm.run/melonjs";
+            import * as me from "https://esm.run/melonjs@10.8";
 
             me.device.onReady(function onReady() {
                 // Initialize the video.
-                if (!me.video.init(320, 240, {parent : "screen", renderer : me.video.AUTO, preferWebGL1 : false, blendMode: "normal"})) {
+                if (!me.video.init(1024, 768, {parent : "screen", renderer : me.video.AUTO, preferWebGL1 : false, blendMode: "normal"})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }
@@ -24,7 +24,7 @@
                     constructor() {
                         super(0, 0, me.game.viewport.width, me.game.viewport.height);
 
-                        this.starMask = new me.Polygon(110, 25, [
+                        this.starMask = new me.Polygon(300, 70, [
                             // draw a star
                             {x: 0, y: 0},
                             {x: 14, y: 30},
@@ -39,17 +39,18 @@
                         ]);
 
                         this.polymask = new me.Polygon(0, 0, [
-                            {x: 125, y: 17},
-                            {x: 75, y: 17},
-                            {x: 50, y: 60},
-                            {x: 75, y: 103},
-                            {x: 125, y: 103},
-                            {x: 150, y: 60}
+                            {x: 155, y: 77},
+                            {x: 105, y: 77},
+                            {x: 80, y: 120},
+                            {x: 105, y: 163},
+                            {x: 155, y: 163},
+                            {x: 180, y: 120}
                         ]);
 
-                        this.polymask.scale(2.0);
+                        this.starMask.scale(4.0);
+                        this.polymask.scale(4.0);
 
-                        this.circleMask = new me.Ellipse(160 + 50, 120 + 50, 100, 100);
+                        this.circleMask = new me.Ellipse(630 + 50, 520 + 50, 200, 200);
 
                         this.stripe1 = new me.Polygon(0, 0, [
                             {x: 0, y: 40},
@@ -69,6 +70,24 @@
                             {x: 80, y: 0},
                             {x: 0, y: 80},
                         ]);
+
+                        this.roundRect1 = new me.RoundRect(100, 500, 400, 220, 4);
+                        this.roundRect2 = new me.RoundRect(105, 505, 390, 210, 4);
+
+                        this.rrect1Tween = new me.Tween(this.roundRect1).to({ radius: 100 }, {
+                              duration: 1000,
+                              easing: me.Tween.Easing.Linear.None,
+                              yoyo: true,
+                              repeat: Infinity,
+                              autoStart : true
+                        });
+                        this.rrect2Tween = new me.Tween(this.roundRect2).to({ radius: 100 }, {
+                              duration: 1000,
+                              easing: me.Tween.Easing.Linear.None,
+                              yoyo: true,
+                              repeat: Infinity,
+                              autoStart : true
+                        });
 
                         // a temporary color object
                         this.color = new me.Color();
@@ -115,16 +134,21 @@
                         renderer.setGlobalAlpha(0.5);
 
                         renderer.setColor("#e15d55");
-                        renderer.strokeArc(220, 50, 20, -Math.PI, 0 );
-                        renderer.fillArc(220, 50, 20, Math.PI * 2, Math.PI);
+                        renderer.strokeArc(740, 200, 110, Math.PI, 0 );
+                        renderer.fillArc(740, 200, 110, 0, Math.PI);
 
                         renderer.setColor("#00aa88");
                         renderer.translate(25, 0);
                         renderer.setMask(this.circleMask);
-                        renderer.fillRect(160, 120, 100 ,100);
-                        renderer.strokeEllipse(160 + 50, 120 + 50, 30, 30);
-                        renderer.strokeRect(165, 125, 90 , 90);
+                        renderer.fillRect(580, 470, 200, 200);
+                        renderer.strokeEllipse(630 + 50, 520 + 50, 70, 70);
+                        renderer.strokeRect(600, 490, 160, 160);
                         renderer.clearMask();
+
+                        renderer.setColor("#ff69b4");
+                        renderer.fill(this.roundRect1);
+                        renderer.setColor("#ff1493");
+                        renderer.stroke(this.roundRect2);
                     }
                 };
 
