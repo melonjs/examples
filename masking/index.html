@@ -9,11 +9,11 @@
         <div id="screen"></div>
         <!-- script -->
         <script type="module">
-            import * as me from 'https://esm.run/melonjs';
+            import * as me from 'https://esm.run/melonjs@10.9';
             // upon device ready
             me.device.onReady(function () {
                 // Initialize the video (force canvas renderer as we are using system font later)
-                if (!me.video.init(1218, 768, {parent : "screen", scaleMethod : "fit", renderer: me.video.CANVAS})) {
+                if (!me.video.init(1218, 768, {parent : "screen", scaleMethod : "fit", renderer: me.video.AUTO})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }
@@ -33,6 +33,8 @@
                                 image : "background",
                                 anchorPoint : new me.Vector2d(0.5, 0.5)
                         });
+                        // mask are positioned respectively to the "parent" sprite position/anchor point
+                        bg_sprite1.mask = new me.RoundRect(-me.game.viewport.width / 2, -me.game.viewport.height / 2, me.game.viewport.width, me.game.viewport.height, 20);
 
                         // create a 2nd using an ellipse for masking
                         var bg_sprite2 = new me.Sprite(
