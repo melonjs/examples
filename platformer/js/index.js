@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@10.7';
+import * as me from 'https://esm.run/melonjs@12';
 
 import game from './game.js';
 import resources from './resources.js';
@@ -66,7 +66,7 @@ export default function onload() {
 
             // toggle fullscreen on/off
             if (keyCode === me.input.KEY.F) {
-                if (!me.device.isFullscreen) {
+                if (!me.device.isFullscreen()) {
                     me.device.requestFullscreen();
                 } else {
                     me.device.exitFullscreen();

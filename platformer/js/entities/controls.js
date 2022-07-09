@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@10.7';
+import * as me from 'https://esm.run/melonjs@12';
 import game from './../game.js';
 
 /**
