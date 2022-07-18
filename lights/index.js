@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@10.10';
+import * as me from 'https://esm.run/melonjs@13';
 
 class PlayScreen extends me.Stage {
     /**
@@ -22,6 +22,7 @@ class PlayScreen extends me.Stage {
         var whiteLight = new me.Light2d(
             me.game.viewport.width / 2,
             me.game.viewport.height / 2,
+            200,
             140,
             "#fff",
             0.7
