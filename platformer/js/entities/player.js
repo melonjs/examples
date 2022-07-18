@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@12';
+import * as me from 'https://esm.run/melonjs@13';
 import game from './../game.js';
 
 class PlayerEntity extends me.Entity {
@@ -80,8 +80,6 @@ class PlayerEntity extends me.Entity {
         } else if (me.input.isKeyPressed("right")) {
             this.body.force.x = this.body.maxVel.x;
             this.renderable.flipX(false);
-        } else {
-            this.body.force.x = 0;
         }
 
         if (me.input.isKeyPressed("jump")) {
@@ -92,11 +90,7 @@ class PlayerEntity extends me.Entity {
                 me.audio.stop("jump");
                 me.audio.play("jump", false);
             }
-        }
-        else {
-
-            this.body.force.y = 0;
-
+        } else {
             if (!this.body.falling && !this.body.jumping) {
                 // reset the multipleJump flag if on the ground
                 this.multipleJump = 1;
@@ -126,7 +120,6 @@ class PlayerEntity extends me.Entity {
             super.update(dt);
             return true;
         }
-
         return false;
     }
 

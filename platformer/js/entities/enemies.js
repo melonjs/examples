@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@12';
+import * as me from 'https://esm.run/melonjs@13';
 import game from './../game.js';
 
 /**
@@ -36,7 +36,6 @@ class PathEnemyEntity extends me.Entity {
         this.walkLeft = false;
 
         // body walking & flying speed
-        this.body.force.set(settings.velX || 1, settings.velY || 0);
         this.body.setMaxVelocity(settings.velX || 1, settings.velY || 0);
 
         // set a "enemyObject" type
@@ -61,16 +60,25 @@ class PathEnemyEntity extends me.Entity {
      */
     update(dt) {
 
-        if (this.alive)    {
-            if (this.walkLeft && this.pos.x <= this.startX) {
-                this.body.force.x = Math.abs(this.body.force.x);
-                this.walkLeft = false;
-                this.renderable.flipX(true);
-            } else if (!this.walkLeft && this.pos.x >= this.endX) {
-                this.body.force.x = -Math.abs(this.body.force.x);
-                this.walkLeft = true;
-                this.renderable.flipX(false);
+        if (this.alive) {
+            if (this.walkLeft === true)
+                if (this.pos.x <= this.startX) {
+                    // if reach start position
+                    this.walkLeft = false;
+                    this.renderable.flipX(true);
+                } else {
+                    this.body.force.x = -this.body.maxVel.x;
+                }
             }
+
+            if (this.walkLeft === false) {
+                if (this.pos.x >= this.endX) {
+                    // if reach the end position
+                    this.walkLeft = true;
+                    this.renderable.flipX(false);
+                } else {
+                    this.body.force.x = this.body.maxVel.x;
+                }
         }
 
         // return true if we moved of if flickering
