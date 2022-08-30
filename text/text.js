@@ -31,7 +31,7 @@ export default class TextTest extends me.Renderable {
         });
 
         // bitmap font
-        this.bFont = new me.BitmapText(0, 0, {font: "xolo12"});
+        this.bFont = new me.BitmapText(0, 0, {font: "xolo12", size : 4.0});
         this.fancyBFont = new me.BitmapText(0, 0, {font: "arialfancy"});
     }
 
@@ -128,11 +128,13 @@ export default class TextTest extends me.Renderable {
         // bitmapfonts
         // bFont  test
         this.fancyBFont.textAlign = "right";
-        text = ["ANOTHER FANCY MULTILINE", "BITMAP TEXT USING AN ARRAY", "AND IT STILL WORKS"];
+        this.fancyBFont.wordWrapWidth = 430;
+        text = "ANOTHER FANCY MULTILINE BITMAP TEXT USING WORD WRAP AND IT STILL WORKS";
         this.fancyBFont.lineHeight = 1.2;
         this.fancyBFont.resize(1.5);
-        this.fancyBFont.draw(renderer, text, 640, 230);
+        this.fancyBFont.draw(renderer, text, 620, 230);
         this.fancyBFont.lineHeight = 1.0;
+        this.fancyBFont.wordWrapWidth = -1;
 
         this.bFont.textAlign = "center";
         text = "THIS IS A MULTILINE\n BITMAP TEXT WITH MELONJS\nAND IT WORKS";
