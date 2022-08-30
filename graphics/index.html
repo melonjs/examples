@@ -10,11 +10,11 @@
         <!-- script -->
         <script type="module">
 
-            import * as me from "https://esm.run/melonjs@10.8";
+            import * as me from "https://esm.run/melonjs";
 
             me.device.onReady(function onReady() {
                 // Initialize the video.
-                if (!me.video.init(1024, 768, {parent : "screen", renderer : me.video.AUTO, preferWebGL1 : false, blendMode: "normal"})) {
+                if (!me.video.init(1024, 768, {parent : "screen", renderer : me.video.CANVAS, preferWebGL1 : false, blendMode: "normal"})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }
