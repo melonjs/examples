@@ -34,7 +34,7 @@ class FSControl extends me.GUI_Object {
      * function called when the object is clicked on
      */
     onClick(/* event */) {
-        if (!me.device.isFullscreen) {
+        if (!me.device.isFullscreen()) {
             me.device.requestFullscreen();
         } else {
             me.device.exitFullscreen();
