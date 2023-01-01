@@ -14,9 +14,6 @@ export default function onload() {
             return;
         }
 
-        // initialize the "sound engine"
-        me.audio.init("mp3");
-
         // set all ressources to be loaded
         me.loader.preload(resources, ()=> {
             // subscribe to key down and mouse scroll event to move the map
