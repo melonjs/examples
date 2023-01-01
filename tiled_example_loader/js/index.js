@@ -138,7 +138,7 @@ function levelSelector() {
         "container" : me.game.world,
         "onLoaded"  : ()=> {
             // set the background to black
-            me.game.world.setBackground("#000000");
+            me.game.world.backgroundColor.setColor(0, 0, 0);
             // force redraw
             me.game.repaint();
         }
