@@ -2,7 +2,7 @@
  * ressources
  */
 
-var g_ressources = [
+var resources = [
 
     // village example
     { name: "village",                      type: "tmx",    src: "data/map/village.tmx" },
@@ -59,3 +59,5 @@ var g_ressources = [
     { name: "sprites-table-16-16",          type: "image",   src: "data/map/sprites-table-16-16.png" },
 
 ];
+
+export default resources;

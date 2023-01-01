@@ -11,7 +11,7 @@
     <!-- Canvas placeholder -->
     <div id="map" style="float: inherit;">
     <label for="tmx_map">Tiled example map loader:</label>
-    <select id="level_name" onchange="game.levelSelector()">
+    <select name="level_name" id="level_name">
         <option value=1>Village</option>
         <option value=2>Desert</option>
         <option value=3>Sewers</option>
@@ -30,18 +30,15 @@
     </div>
 
     <div id="screen" style="float: inherit;">
-        <!-- melonJS Library -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/melonjs@13/dist/melonjs.min.js"></script>
-
-        <!-- Game Scripts -->
-        <script type="text/javascript" src="js/ressources.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
     </div>
 
     <!-- Bootstrap -->
-    <script type="text/javascript">
-        me.device.onReady(function onReady() {
-            game.onload();
+    <script type="module">
+        import { device } from 'https://esm.run/melonjs';
+        import onload from './js/index.js';
+
+        device.onReady(function onReady() {
+            onload();
         });
     </script>
 </body>
