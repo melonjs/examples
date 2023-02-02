@@ -61,7 +61,10 @@ class PlayerEntity extends me.Entity {
         ]);
 
         // define a basic walking animatin
-        this.renderable.addAnimation ("walk",  [{ name: "walk0001.png", delay: 100 }, { name: "walk0002.png", delay: 100 }, { name: "walk0003.png", delay: 100 }]);
+        this.renderable.addAnimation("stand", [{ name: "walk0001.png", delay: 100 }]);
+        this.renderable.addAnimation("walk",  [{ name: "walk0001.png", delay: 100 }, { name: "walk0002.png", delay: 100 }, { name: "walk0003.png", delay: 100 }]);
+        this.renderable.addAnimation("jump",  [{ name: "walk0004.png", delay: 150 }, { name: "walk0005.png", delay: 150 }, { name: "walk0006.png", delay: 150 }, { name: "walk0002.png", delay: 150 }, { name: "walk0001.png", delay: 150 }]);
+
         // set as default
         this.renderable.setCurrentAnimation("walk");
 
@@ -74,15 +77,22 @@ class PlayerEntity extends me.Entity {
      */
     update(dt) {
 
-        if (me.input.isKeyPressed("left"))    {
+        if (me.input.isKeyPressed("left")){
+            if (this.body.vel.y === 0) {
+                this.renderable.setCurrentAnimation("walk");
+            }
             this.body.force.x = -this.body.maxVel.x;
             this.renderable.flipX(true);
         } else if (me.input.isKeyPressed("right")) {
+            if (this.body.vel.y === 0) {
+                this.renderable.setCurrentAnimation("walk");
+            }
             this.body.force.x = this.body.maxVel.x;
             this.renderable.flipX(false);
         }
 
         if (me.input.isKeyPressed("jump")) {
+            this.renderable.setCurrentAnimation("jump");
             this.body.jumping = true;
             if (this.multipleJump <= 2) {
                 // easy "math" for double jump
@@ -99,6 +109,11 @@ class PlayerEntity extends me.Entity {
                 // reset the multipleJump flag if falling
                 this.multipleJump = 2;
             }
+        }
+
+
+        if (this.body.force.x === 0 && this.body.force.y === 0) {
+            this.renderable.setCurrentAnimation("stand");
         }
 
         // check if we fell into a hole
