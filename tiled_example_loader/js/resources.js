@@ -9,8 +9,8 @@ var resources = [
     { name: "free_tileset_version_10",      type: "image",  src: "data/map/free_tileset_version_10.png" },
     // desert example
     { name: "desert",                       type: "tmx",    src: "data/map/desert.tmx" },
-    { name: "desert-infinite",              type: "tmx",    src: "data/map/desert-infinite.tmx" },
-    { name: "desert",                       type: "tsx",    src: "data/map/desert.tsx" },
+    { name: "desert-infinite",              type: "tmx",    src: "data/map/desert-infinite.tmx"},
+    { name: "desert",                       type: "tsx",    src: "data/map/desert.tsj" },
     { name: "tmw_desert_spacing",           type: "image",  src: "data/map/tmw_desert_spacing.png" },
     // sewer
     { name: "sewer_tileset",                type: "image",  src: "data/map/sewer_tileset.png" },

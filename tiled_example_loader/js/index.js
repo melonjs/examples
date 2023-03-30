@@ -125,6 +125,9 @@ function levelSelector() {
         case "13":
             level = "island-rotated-tiles";
             break;
+        case "14":
+            level = "desert-infinite";
+            break;
         default:
             level = "village";
             break;
