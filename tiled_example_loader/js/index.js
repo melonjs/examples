@@ -128,6 +128,9 @@ function levelSelector() {
         case "14":
             level = "desert-infinite";
             break;
+        case "15":
+            level = "lunar";
+            break;
         default:
             level = "village";
             break;

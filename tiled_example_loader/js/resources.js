@@ -59,6 +59,12 @@ var resources = [
     { name: "sprites",                      type: "tsx",     src: "data/map/sprites.json" },
     { name: "sprites-table-16-16",          type: "image",   src: "data/map/sprites-table-16-16.png" },
 
+    // Lunar 1Bit
+    { name: "lunar",                        type: "tmx",     src: "data/map/lunar1b/lunar.tmx" },
+    { name: "lunar1b_tileset_visual",       type: "tsx",     src: "data/map/lunar1b/lunar1b_tileset_visual.tsx" },
+    { name: "lunar1b_tileset_visual",       type: "image",   src: "data/map/lunar1b/lunar1b_tileset_visual.png" }
+
+
 ];
 
 export default resources;
