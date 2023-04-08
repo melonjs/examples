@@ -1,5 +1,6 @@
 import resources from './resources.js';
 import * as me from 'https://esm.run/melonjs';
+import { TiledInflatePlugin } from './tiled-inflate-plugin.js';
 
 /**
  *
@@ -13,6 +14,8 @@ export default function onload() {
             alert("Your browser does not support HTML5 canvas.");
             return;
         }
+
+        me.plugin.register(TiledInflatePlugin);
 
         // set all ressources to be loaded
         me.loader.preload(resources, ()=> {

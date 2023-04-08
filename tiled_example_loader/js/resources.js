@@ -64,7 +64,6 @@ var resources = [
     { name: "lunar1b_tileset_visual",       type: "tsx",     src: "data/map/lunar1b/lunar1b_tileset_visual.tsx" },
     { name: "lunar1b_tileset_visual",       type: "image",   src: "data/map/lunar1b/lunar1b_tileset_visual.png" }
 
-
 ];
 
 export default resources;
