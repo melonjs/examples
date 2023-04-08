@@ -25,9 +25,7 @@ export default class TextTest extends me.Renderable {
         this.font = new me.Text(0, 0, {
             font: "Arial",
             size: 8,
-            fillStyle:
-            "white",
-            offScreenCanvas: (me.video.renderer.WebGLVersion >= 1)
+            fillStyle: "white"
         });
 
         // bitmap font
@@ -48,21 +46,16 @@ export default class TextTest extends me.Renderable {
 
         // font size test
         this.font.textAlign = "left";
-        this.font.lineWidth = "2";
+        this.font.strokeStyle.parseCSS("red");
+        this.font.lineWidth = 1;
         this.font.setOpacity (0.5);
-        for (i = 8; i < 48; i += 8) {
+        for (i = 8; i < 56; i += 8) {
             this.font.setFont("Arial", i);
             renderer.setTint(this.color);
             this.font.draw(renderer, "Arial Text " + i + "px !" , 5 , yPos );
             yPos += this.font.getBounds().height;
         }
-        // one more with drawStroke this time
-        this.font.setFont("Arial", 48);
-        this.font.strokeStyle.parseCSS("red");
-        this.font.lineWidth = 3;
-        this.font.draw(renderer, "Arial Text " + i + "px !" , 5 , yPos );
-        this.font.lineWidth = 1;
-        this.font.drawStroke(renderer, "Arial Text " + i + "px !" , 5 , yPos );
+        this.font.lineWidth = 0;
 
         // bFont size test
         yPos = 0;
@@ -104,6 +97,7 @@ export default class TextTest extends me.Renderable {
         for (i = 0; i < baselines.length; i++) {
             text = baselines[i];
             this.font.textBaseline = baselines[i];
+            this.font.lineWidth = 0;
             this.font.draw(renderer, text, xPos, baseline);
             xPos += this.font.measureText(renderer, text + "@@@").width;
         }
@@ -117,6 +111,7 @@ export default class TextTest extends me.Renderable {
         text = "this is a multiline font\n test with melonjs and it\nworks even with a\n specific lineHeight value!";
         this.font.textAlign = "center";
         this.font.lineHeight = 1.1;
+        this.font.lineWidth = 0;
         this.font.draw(renderer, text, 90, 210);
 
 
