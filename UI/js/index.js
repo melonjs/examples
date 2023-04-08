@@ -16,7 +16,7 @@ var game = {
         me.loader.preload(resources, () => {
             // load the texture atlas file
             // this will be used by object entities later
-            this.texture = new me.video.renderer.Texture([
+            this.texture = new me.TextureAtlas([
                 me.loader.getJSON("UI_Assets-0"),
                 me.loader.getJSON("UI_Assets-1"),
                 me.loader.getJSON("UI_Assets-2")

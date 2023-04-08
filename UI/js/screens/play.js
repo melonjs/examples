@@ -12,7 +12,7 @@ class PlayScreen extends me.Stage {
         me.game.world.addChild(new me.ColorLayer("background", "rgba(248, 194, 40, 1.0)"), 0);
 
         // add the UI elements
-        var panel = new UIContainer(150, 100, 450, 325, "OPTIONS");
+        var panel = new UIContainer(100, 100, 450, 325, "OPTIONS");
 
         // add a few checkbox
         panel.addChild(new CheckBoxUI(

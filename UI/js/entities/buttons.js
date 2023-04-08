@@ -4,7 +4,7 @@ import game from "./../index.js";
 /**
  * a basic button control
  */
-export class ButtonUI extends me.GUI_Object {
+export class ButtonUI extends me.UISpriteElement {
     /**
      * constructor
      */
@@ -83,7 +83,7 @@ export class ButtonUI extends me.GUI_Object {
 /**
  * a basic checkbox control
  */
-export class CheckBoxUI extends me.GUI_Object {
+export class CheckBoxUI extends me.UISpriteElement {
     /**
      * constructor
      */
