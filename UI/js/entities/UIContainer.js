@@ -15,40 +15,27 @@ class UIContainer extends me.UIBaseElement {
         this.name = "UIPanel";
 
         // back panel sprite
-        this.panelSprite = game.texture.createSpriteFromName(
+        this.addChild(game.texture.createSpriteFromName(
             "grey_panel",
             { width : this.width, height : this.height},
             true
-        );
-        this.addChild(this.panelSprite);
+        ));
 
-        this.font = new me.Text(0, 0 ,{
+        this.addChild(new me.Text(this.width / 2, 16, {
             font: "kenpixel",
             size: 20,
             fillStyle: "black",
             textAlign: "center",
             textBaseline: "top",
-            bold: true
-        });
-
-        this.label = label;
+            bold: true,
+            text: label
+        }));
 
         // input status flags
         this.isHoldable = true;
 
         // panel can be dragged
         this.isDraggable = true;
-    }
-
-
-    draw(renderer) {
-        super.draw(renderer);
-        this.font.draw(
-            renderer,
-            this.label,
-            this.width / 2,
-            16, // panel border
-        );
     }
 };
 export default UIContainer;
