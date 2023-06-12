@@ -5,7 +5,7 @@
  * http://www.opensource.org/licenses/mit-license
  * @copyright (C) 2011 - 2023 Olivier Biot (AltByte Pte Ltd)
  */
-import { plugin, TMXUtils } from 'melonjs';
+import { plugin, TMXUtils } from 'https://esm.run/melonjs';
 
 /**
  *  base64.ts
