@@ -14,7 +14,7 @@
 
             me.device.onReady(function onReady() {
                 // Initialize the video.
-                if (!me.video.init(1024, 768, {parent : "screen", renderer : me.video.CANVAS, preferWebGL1 : false, blendMode: "normal"})) {
+                if (!me.video.init(1024, 768, {parent : "screen", renderer : me.video.AUTO, preferWebGL1 : false, blendMode: "normal"})) {
                     alert("Your browser does not support HTML5 canvas.");
                     return;
                 }
@@ -144,6 +144,22 @@
                         renderer.strokeEllipse(630 + 50, 520 + 50, 70, 70);
                         renderer.strokeRect(600, 490, 160, 160);
                         renderer.clearMask();
+
+                        renderer.beginPath();
+                        renderer.setColor("blue");
+                        
+                        renderer.moveTo(865, 200);
+                        renderer.lineTo(915, 300);
+                        renderer.lineTo(865, 400);
+                        renderer.lineTo(915, 500);
+                        renderer.lineTo(865, 600);
+
+                        renderer.moveTo(900, 200);
+                        renderer.lineTo(950, 300);
+                        renderer.lineTo(900, 400);
+                        renderer.lineTo(950, 500);
+                        renderer.lineTo(900, 600);
+                        renderer.stroke();
 
                         renderer.setColor("#ff69b4");
                         renderer.fill(this.roundRect1);
