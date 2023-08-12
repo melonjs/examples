@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@13';
+import * as me from 'melonjs';
 import game from './../game.js';
 
 class PlayerEntity extends me.Entity {
@@ -76,7 +76,6 @@ class PlayerEntity extends me.Entity {
      ** update the force applied
      */
     update(dt) {
-
         if (me.input.isKeyPressed("left")){
             if (this.body.vel.y === 0) {
                 this.renderable.setCurrentAnimation("walk");
@@ -117,7 +116,7 @@ class PlayerEntity extends me.Entity {
         }
 
         // check if we fell into a hole
-        if (!this.inViewport && (this.pos.y > me.video.renderer.getHeight())) {
+        if (!this.inViewport && (this.getBounds().top > me.video.renderer.getHeight())) {
             // if yes reset the game
             me.game.world.removeChild(this);
             me.game.viewport.fadeIn("#fff", 150, function(){
