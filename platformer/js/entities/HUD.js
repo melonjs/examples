@@ -1,10 +1,10 @@
-import * as me from 'https://esm.run/melonjs@13';
+import * as me from 'melonjs';
 import game from './../game.js';
 
 /**
  * a basic control to toggle fullscreen on/off
  */
-class FSControl extends me.GUI_Object {
+class FSControl extends me.UISpriteElement {
     /**
      * constructor
      */
@@ -14,6 +14,7 @@ class FSControl extends me.GUI_Object {
             region : "shadedDark30.png"
         });
         this.setOpacity(0.5);
+        this.floating = false;
     }
 
     /**
@@ -46,7 +47,7 @@ class FSControl extends me.GUI_Object {
 /**
  * a basic control to toggle fullscreen on/off
  */
-class AudioControl extends me.GUI_Object {
+class AudioControl extends me.UISpriteElement {
     /**
      * constructor
      */
@@ -57,6 +58,7 @@ class AudioControl extends me.GUI_Object {
         });
         this.setOpacity(0.5);
         this.isMute = false;
+        this.floating = false;
     }
 
     /**
@@ -111,6 +113,8 @@ class ScoreItem extends me.BitmapText {
         );
 
         this.relative = new me.Vector2d(x, y);
+
+        this.floating = false;
 
         // local copy of the global score
         this.score = -1;

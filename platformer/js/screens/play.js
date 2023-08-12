@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@13';
+import * as me from 'melonjs';
 
 import game from './../game.js';
 import VirtualJoypad from './../entities/controls.js';
@@ -22,7 +22,7 @@ class PlayScreen extends me.Stage {
         me.game.world.addChild(this.HUD);
 
         // display if debugPanel is enabled or on mobile
-        if ((me.plugins.debugPanel && me.plugins.debugPanel.panel.visible) || me.device.touch) {
+        if ((me.plugin.cache.debugPanel && me.plugin.cache.debugPanel.panel.visible) || me.device.touch) {
             if (typeof this.virtualJoypad === "undefined") {
                 this.virtualJoypad = new VirtualJoypad();
             }

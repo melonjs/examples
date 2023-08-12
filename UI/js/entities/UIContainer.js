@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from './../../../../melonJS/build/melonjs.module.js';
 import game from "./../index.js";
 
 // a Panel type container

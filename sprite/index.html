@@ -9,7 +9,7 @@
         <div id="screen"></div>
         <!-- script -->
         <script type="module">
-            import * as me from 'https://esm.run/melonjs';
+            import * as me from './../../melonJS/build/melonjs.module.js';
 
             me.device.onReady(function () {
                 // Initialize the video.
@@ -60,7 +60,7 @@
                                 image : "monster",
                                 anchorPoint : new me.Vector2d(0.5, 0.5)
                         });
-                        right_sprite.scale(0.5);
+                        right_sprite.scale(1.25);
 
                         // add a gray background layer
                         me.game.world.addChild(new me.ColorLayer("background", "#202020"));

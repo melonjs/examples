@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@13';
+import * as me from 'melonjs';
 
 import game from './game.js';
 import resources from './resources.js';
@@ -6,7 +6,7 @@ import PlayerEntity from './entities/player.js';
 import { SlimeEnemyEntity, FlyEnemyEntity } from './entities/enemies.js';
 import CoinEntity from './entities/coin.js';
 import PlayScreen from './screens/play.js';
-
+import { DebugPanelPlugin } from "debugPlugin";
 
 /**
  *
@@ -15,20 +15,19 @@ import PlayScreen from './screens/play.js';
 export default function onload() {
 
     // init the video
-    if (!me.video.init(800, 600, {parent : "screen", scaleMethod : "flex-width", renderer : me.video.AUTO, preferWebGL1 : false, subPixel : false })) {
+    if (!me.video.init(800, 600, {parent : "screen", scaleMethod : "flex-width",  renderer : me.video.WEBGL, preferWebGL1 : false, depthTest: "z-buffer", subPixel : false})) {
         alert("Your browser does not support HTML5 canvas.");
         return;
     }
 
-    // initialize the Debug Panel
-    import('./plugin/debug/debugPanel.js').then((plugin) => {
-        // automatically register the debug panel
-        me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
-    });
-
+    // register the debug plugin
+    me.plugin.register(DebugPanelPlugin,  "debugPanel");
 
     // initialize the "sound engine"
     me.audio.init("mp3,ogg");
+  
+    // allow cross-origin for image/texture loading
+	me.loader.crossOrigin = "anonymous";
 
     // set all ressources to be loaded
     me.loader.preload(resources, () => {

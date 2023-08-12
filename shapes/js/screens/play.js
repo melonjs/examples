@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from './../../../../melonJS/build/melonjs.module.js';
 import Sprite from './../entities/entities.js';
 
 class Pointer extends me.Renderable {

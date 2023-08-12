@@ -3,7 +3,7 @@
 * Copyright (C) 2011 - 2021 Olivier Biot
 * http://www.melonjs.org
 */
-import * as me from 'https://esm.run/melonjs';
+import * as me from './../../../../../melonJS/build/melonjs.module.js';
 
 var DEBUG_HEIGHT = 50;
 
@@ -319,8 +319,8 @@ class DebugPanel extends me.Renderable {
                         }
 
                         // draw the renderable bounds
-                        renderer.setColor("green");
-                        renderer.stroke(this.getBounds());
+                        //renderer.setColor("green");
+                        //renderer.stroke(this.getBounds());
 
                         // the sprite mask if defined
                         if (typeof this.mask !== "undefined") {
@@ -393,7 +393,7 @@ class DebugPanel extends me.Renderable {
                     renderer.save();
 
                     // if this object of this renderable parent is not the root container
-                    if (!this.ancestor.root && this.ancestor.floating) {
+                    if (!this.root && !this.ancestor.root && this.ancestor.floating) {
                         renderer.translate(
                             -absolutePosition.x,
                             -absolutePosition.y

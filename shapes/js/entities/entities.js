@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from './../../../../melonJS/build/melonjs.module.js';
 
 class Sprite extends me.Sprite {
      /**
@@ -28,6 +28,8 @@ class Sprite extends me.Sprite {
 
         // to memorize where we grab the sprite
         this.grabOffset = new me.Vector2d(0,0);
+
+        this.anchorPoint.set(0.5, 0.5);
 
         // half transparent when not selected
         this.setOpacity(0.5);
@@ -61,11 +63,15 @@ class Sprite extends me.Sprite {
      */
     onScroll(event) {
         if (this.selected) {
-            // default anchor point for renderable is 0.5, 0.5
-            this.rotate(event.deltaY);
+            
+           
+            console.log( {x:event.gameX, y:event.gameY});
 
             // by default body rotate around the body center
             this.body.rotate(event.deltaY);
+
+            // default anchor point for renderable is 0.5, 0.5
+            this.rotate(event.deltaY);
 
             this.isDirty = true;
 

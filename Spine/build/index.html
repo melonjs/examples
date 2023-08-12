@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+	<head>
+		<meta charset="utf-8"/>
+		<title>melonJS Game</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="index.css">
+		<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+	<body>
+		<!-- Canvas placeholder -->
+		<div id="screen"></div>
+
+		<!-- Plugin(s) -->
+		<script type="text/javascript" src="lib/plugins/spine-canvas.js"></script>
+		<script type="text/javascript" src="lib/plugins/spine-webgl.js"></script>
+
+		<script type="module">
+			import { device } from './dist/melonjs.module.js';
+			import onload from './index.js';
+
+			device.onReady(() => {
+				onload();
+			});
+		</script>
+
+	</body>
+</html>

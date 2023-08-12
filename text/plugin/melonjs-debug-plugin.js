@@ -5,7 +5,7 @@
  * http://www.opensource.org/licenses/mit-license
  * @copyright (C) 2011 - 2023 Olivier Biot (AltByte Pte Ltd)
  */
-import { Renderable, video, utils, BitmapText, Rect, event, plugins, input, plugin, Container, Entity, Text, Camera2d, ImageLayer, game, timer, collision, Math, pool } from 'https://esm.run/melonjs';
+import { Renderable, video, utils, BitmapText, Rect, event, plugins, input, plugin, Container, Entity, Text, Camera2d, ImageLayer, game, timer, collision, Math, pool } from './../../../melonJS/build/melonjs.module.js';
 
 class Counters {
     constructor() {

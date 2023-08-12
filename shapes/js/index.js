@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from './../../../melonJS/build/melonjs.module.js';
 
 import resources from './resources.js';
 import PlayScreen from './screens/play.js';
@@ -10,7 +10,7 @@ var game = {
     onload : function () {
 
         // Initialize the video.
-        if (!me.video.init(640, 480, {parent : "screen", scaleMethod : "flex", renderer : me.video.CANVAS})) {
+        if (!me.video.init(640, 480, {parent : "screen", scaleMethod : "flex", renderer : me.video.AUTO})) {
             alert("Your browser does not support HTML5 canvas.");
             return;
         }
