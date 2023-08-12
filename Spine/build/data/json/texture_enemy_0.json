@@ -1,0 +1,268 @@
+{
+	"frames": [
+		{
+			"filename": "enemy00_walk_side_0",
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 97,
+				"h": 123
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 41,
+				"y": 47,
+				"w": 97,
+				"h": 123
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_1",
+			"frame": {
+				"x": 100,
+				"y": 1,
+				"w": 100,
+				"h": 123
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 38,
+				"y": 47,
+				"w": 100,
+				"h": 123
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_2",
+			"frame": {
+				"x": 202,
+				"y": 1,
+				"w": 94,
+				"h": 121
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 38,
+				"y": 49,
+				"w": 94,
+				"h": 121
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_3",
+			"frame": {
+				"x": 298,
+				"y": 1,
+				"w": 90,
+				"h": 122
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 38,
+				"y": 48,
+				"w": 90,
+				"h": 122
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_4",
+			"frame": {
+				"x": 390,
+				"y": 1,
+				"w": 90,
+				"h": 122
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 38,
+				"y": 48,
+				"w": 90,
+				"h": 122
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_5",
+			"frame": {
+				"x": 1,
+				"y": 126,
+				"w": 128,
+				"h": 124
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 46,
+				"w": 128,
+				"h": 124
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_6",
+			"frame": {
+				"x": 131,
+				"y": 126,
+				"w": 128,
+				"h": 122
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 48,
+				"w": 128,
+				"h": 122
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_7",
+			"frame": {
+				"x": 261,
+				"y": 126,
+				"w": 128,
+				"h": 122
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 48,
+				"w": 128,
+				"h": 122
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_8",
+			"frame": {
+				"x": 391,
+				"y": 126,
+				"w": 118,
+				"h": 120
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 50,
+				"w": 118,
+				"h": 120
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_9",
+			"frame": {
+				"x": 1,
+				"y": 252,
+				"w": 111,
+				"h": 123
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 47,
+				"w": 111,
+				"h": 123
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_10",
+			"frame": {
+				"x": 114,
+				"y": 252,
+				"w": 111,
+				"h": 123
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 47,
+				"w": 111,
+				"h": 123
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		},
+		{
+			"filename": "enemy00_walk_side_11",
+			"frame": {
+				"x": 227,
+				"y": 252,
+				"w": 115,
+				"h": 124
+			},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {
+				"x": 20,
+				"y": 46,
+				"w": 115,
+				"h": 124
+			},
+			"sourceSize": {
+				"w": 196,
+				"h": 196
+			}
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "texture_enemy_0.png",
+		"format": "RGBA4444",
+		"size": {
+			"w": 512,
+			"h": 512
+		},
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:2d0d0be8a27b88ed1686f096c531fd99:08f79e02d0639bd495ff1009cf5f4c28:fb96719366ea268bfdef00d3677209b4$"
+	}
+}

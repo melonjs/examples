@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>melonJS - shapes test</title>
+  <title>melonJS - platformer example</title>
   <link rel="stylesheet" type="text/css" media="screen" href="index.css">
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,11 +13,11 @@
 
   <!-- Bootstrap -->
   <script type="module">
-      import { device } from './../../melonJS/build/melonjs.module.js';
-      import game from './js/index.js';
+      import { device, Container } from 'https://esm.run/melonjs';
+      import onload from './js/index.js';
 
-      device.onReady(function onReady() {
-          game.onload();
+      device.onReady(() => {
+          onload();
       });
   </script>
 </body>
