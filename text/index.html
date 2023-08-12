@@ -5,12 +5,24 @@
   <link rel="stylesheet" type="text/css" media="screen" href="index.css">
 </head>
 <body
+ <!-- Since import maps are not yet supported by all browsers, its is necessary to add the polyfill es-module-shims.js -->
+  <script async src="https://unpkg.com/es-module-shims@1.7.3/dist/es-module-shims.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "melonjs": "https://cdn.jsdelivr.net/npm/melonjs/+esm",
+        "debugPlugin" : "https://cdn.jsdelivr.net/npm/@melonjs/debug-plugin/dist/@melonjs/debug-plugin.min.js"
+      }
+    }
+  </script>
+
   <!-- Canvas placeholder -->
   <div id="screen"></div>
 
   <!-- Bootstrap -->
   <script type="module">
-      import * as me from 'https://esm.run/melonjs';
+      import * as me from 'melonjs';
+      import { DebugPanelPlugin } from "debugPlugin";
       import TextTest from './text.js';
 
       me.device.onReady(() => {
@@ -20,11 +32,8 @@
               return;
           }
 
-          // initialize the Debug Panel
-          import('./plugin/melonjs-debug-plugin.js').then((plugin) => {
-                  // automatically register the debug panel
-                  me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
-          });
+          // register the debug plugin
+          me.plugin.register(DebugPanelPlugin,  "debugPanel");
 
           // set all ressources to be loaded
           me.loader.preload([

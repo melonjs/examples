@@ -1,10 +1,10 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
 
 // the font test renderables object
 export default class TextTest extends me.Renderable {
 
     constructor() {
-        super(0, 0, me.video.renderer.getWidth(), me.video.renderer.getHeight());
+        super(0, 0, 640, 480);
 
         this.anchorPoint.set(0, 0);
 
