@@ -1,4 +1,5 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
+import { DebugPanelPlugin } from "debugPlugin";
 import PlayScreen from "./screens/play.js";
 import resources from "./resources.js";
 
@@ -11,6 +12,9 @@ var game = {
             alert("Your browser does not support HTML5 canvas.");
             return;
         }
+
+        // register the debug plugin
+        me.plugin.register(DebugPanelPlugin,  "debugPanel");
 
         // set all ressources to be loaded
         me.loader.preload(resources, () => {
