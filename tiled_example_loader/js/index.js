@@ -1,6 +1,6 @@
 import resources from './resources.js';
-import * as me from 'https://esm.run/melonjs';
-import { TiledInflatePlugin } from './tiled-inflate-plugin.js';
+import * as me from 'melonjs';
+import { TiledInflatePlugin } from 'tiled-inflate-plugin';
 
 /**
  *
