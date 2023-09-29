@@ -9,8 +9,8 @@
         <div id="screen"></div>
         <!-- script -->
         <script type="module">
-            import * as me from './../../melonJS/build/melonjs.module.js';
-
+            import * as me from "https://cdn.jsdelivr.net/npm/melonjs/+esm";
+            
             me.device.onReady(function () {
                 // Initialize the video.
                 if (!me.video.init(1218, 562, {parent : "screen", scaleMethod : "flex", renderer : me.video.CANVAS})) {
@@ -52,7 +52,7 @@
                                 image : "monster",
                                 anchorPoint : new me.Vector2d(0.5, 0.5)
                         });
-                        left_sprite.scale(0.5);
+                        left_sprite.scale(0.25);
 
                         var right_sprite = new me.Sprite(
                             me.game.viewport.width / 2 + 125,
@@ -60,7 +60,7 @@
                                 image : "monster",
                                 anchorPoint : new me.Vector2d(0.5, 0.5)
                         });
-                        right_sprite.scale(1.25);
+                        right_sprite.scale(0.75);
 
                         // add a gray background layer
                         me.game.world.addChild(new me.ColorLayer("background", "#202020"));
