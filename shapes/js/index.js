@@ -1,41 +1,34 @@
-import * as me from './../../../melonJS/build/melonjs.module.js';
+import * as me from "melonjs";
+import { DebugPanelPlugin } from "debugPlugin";
 
-import resources from './resources.js';
-import PlayScreen from './screens/play.js';
+import resources from "./resources.js";
+import PlayScreen from "./screens/play.js";
 
+/**
+ *
+ * Initialize the application
+ */
+export default function onload() {
 
-/* Game namespace */
-var game = {
-    // Run on page load.
-    onload : function () {
+    // Initialize the video.
+    if (!me.video.init(640, 480, {parent : "screen", scaleMethod : "flex", renderer : me.video.AUTO})) {
+        alert("Your browser does not support HTML5 canvas.");
+        return;
+    }
+    
+    // register the debug plugin
+    me.plugin.register(DebugPanelPlugin,  "debugPanel");
 
-        // Initialize the video.
-        if (!me.video.init(640, 480, {parent : "screen", scaleMethod : "flex", renderer : me.video.AUTO})) {
-            alert("Your browser does not support HTML5 canvas.");
-            return;
-        }
+    // configure base URLs
+    me.loader.setBaseURL("image", "data/img/");
+    me.loader.setBaseURL("json", "data/json/");
+    me.loader.setBaseURL("audio", "data/audio/");
 
-        // initialize the Debug Panel
-        import('./plugin/debug/debugPanel.js').then((plugin) => {
-            // automatically register the debug panel
-            me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
-        });
+    // allow cross-origin for image/texture loading
+    me.loader.crossOrigin = "anonymous";
 
-
-        // configure base URLs
-        me.loader.setBaseURL("image", "data/img/");
-        me.loader.setBaseURL("json", "data/json/");
-        me.loader.setBaseURL("audio", "data/audio/");
-
-        // set all ressources to be loaded
-        me.loader.preload(resources, this.loaded.bind(this));
-    },
-
-
-    /**
-     * callback when everything is loaded
-     */
-    loaded: function () {
+    // set all ressources to be loaded
+    me.loader.preload(resources, () => {
 
         // set the "Play/Ingame" Screen Object
         me.state.set(me.state.PLAY, new PlayScreen());
@@ -55,7 +48,6 @@ var game = {
 
         // switch to PLAY state
         me.state.change(me.state.PLAY);
-    }
+    });
 };
 
-export default game;

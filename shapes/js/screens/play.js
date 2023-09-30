@@ -1,5 +1,5 @@
-import * as me from './../../../../melonJS/build/melonjs.module.js';
-import Sprite from './../entities/entities.js';
+import * as me from "melonjs";
+import Sprite from "./../entities/entities.js";
 
 class Pointer extends me.Renderable {
     constructor() {

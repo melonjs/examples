@@ -1,4 +1,4 @@
-import * as me from './../../../../melonJS/build/melonjs.module.js';
+import * as me from "melonjs";
 
 class Sprite extends me.Sprite {
      /**
