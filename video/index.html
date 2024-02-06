@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>melonJS - Video</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+    </head>
+    <body bgcolor="white">
+         <!-- Since import maps are not yet supported by all browsers, its is necessary to add the polyfill es-module-shims.js -->
+        <script async src="https://unpkg.com/es-module-shims@1.7.3/dist/es-module-shims.js"></script>
+        <script type="importmap">
+            {
+            "imports": {
+                "melonjs": "https://cdn.jsdelivr.net/npm/melonjs@16.1/+esm",
+                "debugPlugin" : "https://cdn.jsdelivr.net/npm/@melonjs/debug-plugin/dist/@melonjs/debug-plugin.min.js"
+            }
+            }
+        </script>
+        <!-- Canvas placeholder -->
+        <div id="screen"></div>
+        <!-- script -->
+        <script type="module">
+            import * as me from "melonjs";
+            
+            me.device.onReady(function () {
+                // Initialize the video.
+                if (!me.video.init(1218, 562, {parent : "screen", scaleMethod : "flex", renderer : me.video.CANVAS})) {
+                    alert("Your browser does not support HTML5 canvas.");
+                    return;
+                }
+
+                // allow cross-origin for image/texture loading
+	            me.loader.crossOrigin = "anonymous";
+                
+                // use me.device.hasVideo to detect video support
+                // me.device.hasVideoFormat() can also be used to detected supported video format(s)
+                console.log("Video support: " + (me.device.hasVideo ? "Yes" : "No"));
+
+                me.loader.preload([{
+                        name   : "bigbunny",
+                        type   : "video",
+                        src    : "data/mov_bbb.mp4",
+                        // use stream for large video files
+                        stream : false,
+                        // setting autoplay to true will start the video as soon as it's loaded
+                        autoplay : false,
+                        loop : true
+                    }, {
+                        name   : "1kvideo",
+                        type   : "video",
+                        // 1k "empty" base64 encoded mp4 video for testing (from https://gist.github.com/dmlap/5643609)
+                        src    : "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAr9tZGF0AAACoAYF//+c3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDEyNSAtIEguMjY0L01QRUctNCBBVkMgY29kZWMgLSBDb3B5bGVmdCAyMDAzLTIwMTIgLSBodHRwOi8vd3d3LnZpZGVvbGFuLm9yZy94MjY0Lmh0bWwgLSBvcHRpb25zOiBjYWJhYz0xIHJlZj0zIGRlYmxvY2s9MTowOjAgYW5hbHlzZT0weDM6MHgxMTMgbWU9aGV4IHN1Ym1lPTcgcHN5PTEgcHN5X3JkPTEuMDA6MC4wMCBtaXhlZF9yZWY9MSBtZV9yYW5nZT0xNiBjaHJvbWFfbWU9MSB0cmVsbGlzPTEgOHg4ZGN0PTEgY3FtPTAgZGVhZHpvbmU9MjEsMTEgZmFzdF9wc2tpcD0xIGNocm9tYV9xcF9vZmZzZXQ9LTIgdGhyZWFkcz02IGxvb2thaGVhZF90aHJlYWRzPTEgc2xpY2VkX3RocmVhZHM9MCBucj0wIGRlY2ltYXRlPTEgaW50ZXJsYWNlZD0wIGJsdXJheV9jb21wYXQ9MCBjb25zdHJhaW5lZF9pbnRyYT0wIGJmcmFtZXM9MyBiX3B5cmFtaWQ9MiBiX2FkYXB0PTEgYl9iaWFzPTAgZGlyZWN0PTEgd2VpZ2h0Yj0xIG9wZW5fZ29wPTAgd2VpZ2h0cD0yIGtleWludD0yNTAga2V5aW50X21pbj0yNCBzY2VuZWN1dD00MCBpbnRyYV9yZWZyZXNoPTAgcmNfbG9va2FoZWFkPTQwIHJjPWNyZiBtYnRyZWU9MSBjcmY9MjMuMCBxY29tcD0wLjYwIHFwbWluPTAgcXBtYXg9NjkgcXBzdGVwPTQgaXBfcmF0aW89MS40MCBhcT0xOjEuMDAAgAAAAA9liIQAV/0TAAYdeBTXzg8AAALvbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAD6AAAACoAAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAhl0cmFrAAAAXHRraGQAAAAPAAAAAAAAAAAAAAABAAAAAAAAACoAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAgAAAAIAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAAAAqAAAAAAABAAAAAAGRbWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAAAwAAAAAgBVxAAAAAAALWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAABWaWRlb0hhbmRsZXIAAAABPG1pbmYAAAAUdm1oZAAAAAEAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAAPxzdGJsAAAAmHN0c2QAAAAAAAAAAQAAAIhhdmMxAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAgACABIAAAASAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGP//AAAAMmF2Y0MBZAAK/+EAGWdkAAqs2V+WXAWyAAADAAIAAAMAYB4kSywBAAZo6+PLIsAAAAAYc3R0cwAAAAAAAAABAAAAAQAAAgAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAACtwAAAAEAAAAUc3RjbwAAAAAAAAABAAAAMAAAAGJ1ZHRhAAAAWm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAALWlsc3QAAAAlqXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTQuNjMuMTA0",
+                        stream : false,
+                        autoplay : false,
+                        loop : false
+                    }],
+                    // on load callback
+                    function () {
+
+                        // change to the default stage
+                        // Note: force change now since we are adding things straight away outside of a proper stage object
+                        me.state.change(me.state.DEFAULT, true);
+
+                        // create a new sprite instance
+                        var videoSprite = new me.Sprite(
+                            me.game.viewport.width / 2,
+                            me.game.viewport.height / 2, {
+                                image : me.loader.getVideo("bigbunny"),
+                                anchorPoint : new me.Vector2d(0.5, 0.5)
+                        });
+                        
+                        // scale the video
+                        videoSprite.currentTransform.scale(2);
+
+                        // add a callback when the video ends
+                        videoSprite.onended = function() {
+                            console.log("video ended !")
+                        }
+
+                        // add the video sprite to the scene
+                        me.game.world.addChild(videoSprite);
+
+                        // start the video (autoplay if false by default)
+                        videoSprite.play();
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>
