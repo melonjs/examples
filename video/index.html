@@ -60,6 +60,22 @@
                         // Note: force change now since we are adding things straight away outside of a proper stage object
                         me.state.change(me.state.DEFAULT, true);
 
+
+                        // user interaction is required to start the video
+                        // it does not need to clickable, video will start as soon as a click is detected by the browser
+                        let textMsg = new me.Text(
+                            me.game.viewport.width / 2,
+                            me.game.viewport.height / 2, {
+                            font: "Arial",
+                            size: 20,
+                            fillStyle: "white",
+                            textAlign: "center",
+                            text: "click here to start the video"
+                        });
+
+                        // add the video sprite to the scene
+                        me.game.world.addChild(textMsg);
+
                         // create a new sprite instance
                         var videoSprite = new me.Sprite(
                             me.game.viewport.width / 2,
