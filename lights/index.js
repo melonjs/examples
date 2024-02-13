@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs@13';
+import * as me from 'melonjs';
 
 class PlayScreen extends me.Stage {
     /**
