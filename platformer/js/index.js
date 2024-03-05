@@ -27,7 +27,7 @@ export default function onload() {
     me.audio.init("mp3,ogg");
   
     // allow cross-origin for image/texture loading
-	me.loader.crossOrigin = "anonymous";
+	me.loader.setOptions({ crossOrigin : "anonymous" });
 
     // set all ressources to be loaded
     me.loader.preload(resources, () => {
