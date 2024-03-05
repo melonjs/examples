@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
 
 // a player entity
 class PlayerEntity extends me.Sprite {
