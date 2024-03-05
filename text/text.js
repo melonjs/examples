@@ -68,7 +68,7 @@ export default class TextTest extends me.Renderable {
             // call preDraw and postDraw for the tint to work
             // as the font is not added to the game world
             this.bFont.preDraw(renderer);
-            this.bFont.draw(renderer, "BITMAP TEST", me.video.renderer.getWidth(), yPos );
+            this.bFont.draw(renderer, "BITMAP TEST", me.video.renderer.width, yPos );
             this.bFont.postDraw(renderer);
             yPos += this.bFont.getBounds().height * 1.5;
         }
@@ -85,7 +85,7 @@ export default class TextTest extends me.Renderable {
         me.video.renderer.setLineWidth(3);
         me.video.renderer.strokeLine(
             0, baseline + 0.5,
-            me.video.renderer.getWidth(), baseline + 0.5
+            me.video.renderer.width, baseline + 0.5
         );
 
         var baselines = [
@@ -134,7 +134,7 @@ export default class TextTest extends me.Renderable {
         this.bFont.textAlign = "center";
         text = "THIS IS A MULTILINE\n BITMAP TEXT WITH MELONJS\nAND IT WORKS";
         this.bFont.resize(2.5);
-        this.bFont.draw(renderer, text,  me.video.renderer.getWidth() / 2, 400);
+        this.bFont.draw(renderer, text,  me.video.renderer.width / 2, 400);
 
         // baseline test with bitmap font
         var xPos = 0;
@@ -145,7 +145,7 @@ export default class TextTest extends me.Renderable {
         me.video.renderer.setColor("red");
         me.video.renderer.strokeLine(
             0, baseline + 0.5,
-            me.video.renderer.getWidth(), baseline + 0.5
+            me.video.renderer.width, baseline + 0.5
         );
 
         // font baseline test
