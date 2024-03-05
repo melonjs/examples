@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>aseprite demo</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    </head>
+    <body>
+        <!-- Since import maps are not yet supported by all browsers, its is necessary to add the polyfill es-module-shims.js -->
+        <script async src="https://unpkg.com/es-module-shims@1.7.3/dist/es-module-shims.js"></script>
+        <script type="importmap">
+            {
+                "imports": {
+                    "melonjs": "https://cdn.jsdelivr.net/npm/melonjs@17/+esm",
+                    "debugPlugin" : "https://cdn.jsdelivr.net/npm/@melonjs/debug-plugin/dist/@melonjs/debug-plugin.min.js"
+                }
+            }
+        </script>
+        <!-- Canvas placeholder -->
+        <div id="map" style="float: inherit;">
+            <label for="aseprite animation">Animation:</label>
+            <select name="animation_name" id="animation_name">
+                <option value="step">step</option>
+                <option value="idle defesa">idle defesa</option>
+                <option value="SHit">SHit</option>
+                <option value="Delay">Delay</option>
+                <option value="release">release</option>
+                <option value="Idle fight">Idle fight</option>
+                <option value="run front">run front</option>
+                <option value="run back">run back</option>
+                <option value="morte">morte</option>
+                <option value="Skill 1 - Trust-dash">Skill 1 - Trust-dash</option>
+                <option value="Hurt">Hurt</option>
+                <option value="Delay c">Delay c</option>
+                <option value="Delay Front atk">Delay Front atk</option>
+                <option value="CF1">CF1</option>
+                <option value="RF1">RF1</option>
+                <option value="Sit">Sit</option>
+                <option value="standup">standup</option>
+                <option value="idle back">idle back</option>
+                <option value="skill back">skill back</option>
+                <option value="skill front">skill front</option>
+                <option value="War Cry">War Cry</option>
+                <option value="slide">slide</option>
+                <option value="Magnum Break">Magnum Break</option>
+                <option value="fallen">fallen</option>
+                <option value="Ress">Ress</option>
+            </select>
+        </div>
+        <!-- Bootstrap -->
+        <script type="module">
+            import { device } from "melonjs";
+            import game from './js/index.js';
+
+            device.onReady(function onReady() {
+                game.onload();
+            });
+        </script>
+    </body>
+</html>
