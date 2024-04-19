@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
 
 class EnemyEntity extends me.Sprite {
     constructor(x, y) {

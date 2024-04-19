@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>melonJS - platformer example</title>
+  <title>melonJS - Space Invaders example</title>
   <link rel="stylesheet" type="text/css" media="screen" href="index.css">
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -10,10 +10,19 @@
 <body>
   <!-- Canvas placeholder -->
   <div id="screen"></div>
-
+    <!-- Since import maps are not yet supported by all browsers, its is necessary to add the polyfill es-module-shims.js -->
+    <script async src="https://unpkg.com/es-module-shims@latest/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "melonjs": "https://cdn.jsdelivr.net/npm/melonjs@17/+esm",
+                "debugPlugin" : "https://cdn.jsdelivr.net/npm/@melonjs/debug-plugin/dist/@melonjs/debug-plugin.min.js"
+            }
+        }
+    </script>
   <!-- Bootstrap -->
   <script type="module">
-      import { device, Container } from 'https://esm.run/melonjs';
+      import { device, Container } from 'melonjs';
       import onload from './js/index.js';
 
       device.onReady(() => {

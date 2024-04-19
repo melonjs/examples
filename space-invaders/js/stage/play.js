@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
 
 import PlayerEntity from "../renderables/player.js";
 import EnemyManager from "../managers/enemy-manager.js";

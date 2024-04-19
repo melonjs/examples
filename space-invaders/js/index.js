@@ -1,4 +1,5 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
+import { DebugPanelPlugin } from 'debugPlugin';
 
 import PlayScreen from './stage/play.js';
 import Laser from './renderables/laser.js';
@@ -12,18 +13,14 @@ export default function onload() {
         return;
     }
 
-    // initialize the Debug Panel
-    import('./plugin/debug-plugin.js').then((plugin) => {
-        // automatically register the debug panel
-        me.utils.function.defer(me.plugin.register, this, plugin.DebugPanelPlugin, "debugPanel");
-    });
-
+    // register the debug plugin
+    me.plugin.register(DebugPanelPlugin,  "debugPanel");
 
     // Initialize the audio.
     me.audio.init("mp3,ogg");
 
     // allow cross-origin for image/texture loading
-    me.loader.crossOrigin = "anonymous";
+	me.loader.setOptions({ crossOrigin : "anonymous" });
 
     // set and load all resources.
     me.loader.preload(DataManifest, function() {

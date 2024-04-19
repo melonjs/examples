@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
 
 import PlayScreen from "../stage/play.js";
 import CONSTANTS from '../constants.js';
@@ -57,7 +57,6 @@ export class Laser extends me.Renderable {
      * @returns {boolean}
      */
     onCollision(response, other) {
-
         if (other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
             me.game.world.removeChild(this);
             return false;

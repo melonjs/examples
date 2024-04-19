@@ -1,4 +1,4 @@
-import * as me from 'https://esm.run/melonjs';
+import * as me from 'melonjs';
 
 import CONSTANTS from '../constants.js';
 
@@ -40,15 +40,6 @@ class PlayerEntity extends me.Sprite {
 
         this.pos.x = me.Math.clamp(this.pos.x, 32, this.maxX);
 
-        return true;
-    }
-
-   /**
-     * collision handler
-     * (called when colliding with other objects)
-     */
-    onCollision(response, other) {
-        // Make all other objects solid
         return true;
     }
 };
