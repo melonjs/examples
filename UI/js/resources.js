@@ -10,7 +10,7 @@ var resources = [
     { name: "UI_Assets-2", type: "json", src: "data/img/UI_Assets-2.json" },
 
     // font face
-    { name: "'kenpixel'", type: "fontface",  src: "url('data/font/kenvector_future.woff2')" }
+    { name: "kenpixel", type: "fontface",  src: "url(data/font/kenvector_future.woff2)" }
 ];
 
 export default resources;
