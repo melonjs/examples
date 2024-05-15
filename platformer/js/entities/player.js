@@ -116,7 +116,7 @@ class PlayerEntity extends me.Entity {
         }
 
         // check if we fell into a hole
-        if (!this.inViewport && (this.getBounds().top > me.video.renderer.getHeight())) {
+        if (!this.inViewport && (this.getBounds().top > me.video.renderer.height)) {
             // if yes reset the game
             me.game.world.removeChild(this);
             me.game.viewport.fadeIn("#fff", 150, function(){
