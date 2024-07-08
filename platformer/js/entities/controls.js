@@ -4,7 +4,7 @@ import game from './../game.js';
 /**
  * a basic control to toggle fullscreen on/off
  */
-class Button extends me.GUI_Object {
+class Button extends me.UISpriteElement {
     /**
      * constructor
      */
@@ -40,7 +40,7 @@ class Button extends me.GUI_Object {
 /**
  * a virtual joypad
  */
-class Joypad extends me.GUI_Object {
+class Joypad extends me.UISpriteElement {
     /**
      * constructor
      */
