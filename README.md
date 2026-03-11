@@ -1,4 +1,4 @@
-# melonJS examples
+THIS REPOSITORY HAS BEEN ARCHIVED
 
-this repository contains [examples](https://melonjs.github.io/examples/) showing most of the basic features of melonJS
-
+Examples have now been ported to the melonJS mono repo, ad are now accessible at the following address : 
+https://melonjs.github.io/melonJS/examples/
